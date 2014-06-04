@@ -1,0 +1,3 @@
+{"name":"jemc-db-prod", "url":"jdbc:oracle:thin:@jemc-db-prod:1521:siena", "user":"siena_web_services"}
+{"name":"jemc-db-prod", "url":"jdbc:oracle:thin:@jemc-db-prod:1521:siena", "user":"siena_web_services"}
+
