@@ -1,0 +1,70 @@
+@()
+<div id="syn" class="groupInner">
+	<h4>Astorm Synonyms</h4>
+	<input id="astormSynonym" style="width: 150px" />
+	<h4>Siena Synonyms</h4>
+	<input id="sienaSynonym" style="width: 150px" />
+</div>
+
+<script>
+	var synonyms = [ {
+		"astormSyn" : {
+			"values" : [ {
+				"text" : "astorm2",
+				"value" : 0,
+				"set" : true
+			}, {
+				"text" : "dms_a",
+				"value" : 1
+			} ]
+		},
+		"sienaSyn" : {
+			"values" : [ {
+				"text" : "siena",
+				"value" : 0,
+				"set" : true
+			}, {
+				"text" : "siena_web_services",
+				"value" : 1
+			} ]
+		}
+	} ];
+
+	//Build the data source for the items
+	var dataSource = new kendo.data.DataSource({
+		data : synonyms,
+		change : function(e) {
+			renderConfig(e.items[0].astormSyn.values, "#astormSynonym");
+			renderConfig(e.items[0].sienaSyn.values, "#sienaSynonym");
+		}
+	});
+
+	// Initial read of the items in to the data source
+	dataSource.read();
+
+	function renderConfig(values, id) {
+		// find the currently selected item
+		var index;
+		for (i = 0; i < syn.length; i++) {
+			if (values[i].set == true)
+				index = values[i].value;
+		}
+		;
+
+		// render the combobox
+		$(id).kendoComboBox({
+			dataTextField : "text",
+			dataValueField : "value",
+			dataSource : values,
+			index : index,
+			change : function(e) {
+				var combobox1 = $("#astormSynonym").data("kendoComboBox")
+				var combobox2 = $("#sienaSynonym").data("kendoComboBox")
+				console.log("values = " + combobox1.text() + ", " + combobox2.text());
+			}
+		});
+	}
+
+	function renderSienaSynonym(syn) {
+	}
+</script>

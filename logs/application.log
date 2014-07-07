@@ -1,0 +1,198 @@
+2014-07-07 16:18:45,779 - [INFO] - from play in pool-85-thread-4 
+Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+
+2014-07-07 16:18:49,887 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-07-07 16:18:50,236 - [DEBUG] - from com.jolbox.bonecp.BoneCPDataSource in play-akka.actor.default-dispatcher-3 
+JDBC URL = jdbc:oracle:thin:@localhost:1521:siena, Username = siena_web_services, partitions = 1, max (per partition) = 30, min (per partition) = 5, idle max age = 10 min, idle test period = 1 min, strategy = DEFAULT
+
+2014-07-07 16:18:53,137 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-3 
+select item, default_value, value, description, multiples_allowed from siena.siena_config
+
+2014-07-07 16:19:03,542 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-5 
+select item, default_value, value, description, multiples_allowed from siena.siena_config
+
+2014-07-07 16:26:19,716 - [ERROR] - from com.jolbox.bonecp.ConnectionTesterThread in BoneCP-keep-alive-scheduler 
+Destroy connection exception
+java.sql.SQLRecoverableException: No more data to read from socket
+	at oracle.jdbc.driver.T4CMAREngineStream.unmarshalUB1(T4CMAREngineStream.java:446) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:390) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4C7Ocommoncall.doOLOGOFF(T4C7Ocommoncall.java:59) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logoff(T4CConnection.java:757) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.close(PhysicalConnection.java:4581) ~[ojdbc6.jar:12.1.0.1.0]
+	at com.jolbox.bonecp.ConnectionHandle.internalClose(ConnectionHandle.java:549) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.closeConnection(ConnectionTesterThread.java:159) [bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.run(ConnectionTesterThread.java:104) [bonecp.jar:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+
+2014-07-07 16:26:54,212 - [ERROR] - from com.jolbox.bonecp.ConnectionTesterThread in BoneCP-keep-alive-scheduler 
+Destroy connection exception
+java.sql.SQLRecoverableException: No more data to read from socket
+	at oracle.jdbc.driver.T4CMAREngineStream.unmarshalUB1(T4CMAREngineStream.java:446) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:390) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4C7Ocommoncall.doOLOGOFF(T4C7Ocommoncall.java:59) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logoff(T4CConnection.java:757) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.close(PhysicalConnection.java:4581) ~[ojdbc6.jar:12.1.0.1.0]
+	at com.jolbox.bonecp.ConnectionHandle.internalClose(ConnectionHandle.java:549) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.closeConnection(ConnectionTesterThread.java:159) [bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.run(ConnectionTesterThread.java:104) [bonecp.jar:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+
+2014-07-07 16:26:54,212 - [ERROR] - from com.jolbox.bonecp.ConnectionTesterThread in BoneCP-keep-alive-scheduler 
+Destroy connection exception
+java.sql.SQLRecoverableException: No more data to read from socket
+	at oracle.jdbc.driver.T4CMAREngineStream.unmarshalUB1(T4CMAREngineStream.java:446) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:390) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4C7Ocommoncall.doOLOGOFF(T4C7Ocommoncall.java:59) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logoff(T4CConnection.java:757) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.close(PhysicalConnection.java:4581) ~[ojdbc6.jar:12.1.0.1.0]
+	at com.jolbox.bonecp.ConnectionHandle.internalClose(ConnectionHandle.java:549) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.closeConnection(ConnectionTesterThread.java:159) [bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.run(ConnectionTesterThread.java:104) [bonecp.jar:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+
+2014-07-07 16:26:54,266 - [ERROR] - from com.jolbox.bonecp.ConnectionTesterThread in BoneCP-keep-alive-scheduler 
+Destroy connection exception
+java.sql.SQLRecoverableException: No more data to read from socket
+	at oracle.jdbc.driver.T4CMAREngineStream.unmarshalUB1(T4CMAREngineStream.java:446) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:390) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4C7Ocommoncall.doOLOGOFF(T4C7Ocommoncall.java:59) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logoff(T4CConnection.java:757) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.close(PhysicalConnection.java:4581) ~[ojdbc6.jar:12.1.0.1.0]
+	at com.jolbox.bonecp.ConnectionHandle.internalClose(ConnectionHandle.java:549) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.closeConnection(ConnectionTesterThread.java:159) [bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.run(ConnectionTesterThread.java:104) [bonecp.jar:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+
+2014-07-07 16:26:59,993 - [ERROR] - from com.jolbox.bonecp.ConnectionTesterThread in BoneCP-keep-alive-scheduler 
+Destroy connection exception
+java.sql.SQLRecoverableException: No more data to read from socket
+	at oracle.jdbc.driver.T4CMAREngineStream.unmarshalUB1(T4CMAREngineStream.java:446) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:390) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:249) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4C7Ocommoncall.doOLOGOFF(T4C7Ocommoncall.java:59) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logoff(T4CConnection.java:757) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.close(PhysicalConnection.java:4581) ~[ojdbc6.jar:12.1.0.1.0]
+	at com.jolbox.bonecp.ConnectionHandle.internalClose(ConnectionHandle.java:549) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.closeConnection(ConnectionTesterThread.java:159) [bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionTesterThread.run(ConnectionTesterThread.java:104) [bonecp.jar:na]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471) [na:1.7.0_45]
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:178) [na:1.7.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:292) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+
+2014-07-07 16:27:00,001 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 10. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:01,007 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 9. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:02,014 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 8. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:03,020 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 7. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:04,025 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 6. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:05,031 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 5. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:06,038 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 4. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:07,044 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 3. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:08,050 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 2. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:09,055 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 1. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:10,056 - [ERROR] - from com.jolbox.bonecp.ConnectionHandle in BoneCP-pool-watch-thread 
+Database access problem. Killing off this connection and all remaining connections in the connection pool. SQL State = 08006
+
+2014-07-07 16:27:10,057 - [ERROR] - from com.jolbox.bonecp.PoolWatchThread in BoneCP-pool-watch-thread 
+Error in trying to obtain a connection. Retrying in 1000ms
+java.sql.SQLRecoverableException: IO Error: The Network Adapter could not establish the connection
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:711) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:558) ~[ojdbc6.jar:12.1.0.1.0]
+	at java.sql.DriverManager.getConnection(DriverManager.java:571) ~[na:1.7.0_45]
+	at java.sql.DriverManager.getConnection(DriverManager.java:215) ~[na:1.7.0_45]
+	at com.jolbox.bonecp.BoneCP.obtainRawInternalConnection(BoneCP.java:363) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.BoneCP.obtainInternalConnection(BoneCP.java:269) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.ConnectionHandle.<init>(ConnectionHandle.java:242) ~[bonecp.jar:na]
+	at com.jolbox.bonecp.PoolWatchThread.fillConnections(PoolWatchThread.java:115) [bonecp.jar:na]
+	at com.jolbox.bonecp.PoolWatchThread.run(PoolWatchThread.java:82) [bonecp.jar:na]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145) [na:1.7.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615) [na:1.7.0_45]
+	at java.lang.Thread.run(Thread.java:744) [na:1.7.0_45]
+Caused by: oracle.net.ns.NetException: The Network Adapter could not establish the connection
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:445) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.net.resolver.AddrResolution.resolveAndExecute(AddrResolution.java:464) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.net.ns.NSProtocol.establishConnection(NSProtocol.java:594) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:229) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1360) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:486) ~[ojdbc6.jar:12.1.0.1.0]
+	... 14 common frames omitted
+Caused by: java.net.ConnectException: Connection refused
+	at java.net.PlainSocketImpl.socketConnect(Native Method) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:339) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:200) ~[na:1.7.0_45]
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:182) ~[na:1.7.0_45]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:1.7.0_45]
+	at java.net.Socket.connect(Socket.java:579) ~[na:1.7.0_45]
+	at oracle.net.nt.TcpNTAdapter.connect(TcpNTAdapter.java:162) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.net.nt.ConnOption.connect(ConnOption.java:133) ~[ojdbc6.jar:12.1.0.1.0]
+	at oracle.net.nt.ConnStrategy.execute(ConnStrategy.java:411) ~[ojdbc6.jar:12.1.0.1.0]
+	... 19 common frames omitted
+
+2014-07-07 16:27:11,063 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 10. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:12,068 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 9. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:13,074 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 8. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+
+2014-07-07 16:27:14,079 - [ERROR] - from com.jolbox.bonecp.hooks.AbstractConnectionHook in BoneCP-pool-watch-thread 
+Failed to acquire connection to jdbc:oracle:thin:@localhost:1521:siena Sleeping for 1000ms and trying again. Attempts left: 7. Exception: oracle.net.ns.NetException: The Network Adapter could not establish the connection.Message:IO Error: The Network Adapter could not establish the connection
+

@@ -1,51 +1,109 @@
 package models
 
-case class User(conn: String, name: String, password: String)
+import play.api.db.DB
+import play.api.mvc.Result
+import play.api.mvc.Request
+import play.api.mvc.AnyContent
+import play.api.Play.current
+import play.api.libs.json.JsValue
+import play.api.libs.json.Json
+import play.api.libs.json.JsArray
+import play.api.libs.json.JsObject
+import oracle.jdbc.pool._
+import global._
+import oracle.jdbc.replay.OracleDataSourceImpl
+import play.api.Play.current
+import com.typesafe.config.ConfigFactory
 
-object Users {
-  def authenticate(conn: String, password: String): Int = {
-    println(s"authenticate, always suceeds : ${conn} , ${password}")
-    1
+object User {
+  def apply(name: String, url: String, user: String): User = {
+    new User(name = Some(name), url = url, user = user)
+  }
+}
+class User(
+  var name: Option[String] = None,
+  var url: String,
+  var user: String) {
+  override def toString(): String = {
+    "user: name=" + name + ", url=" + url + ", user=" + user
   }
 }
 
-//object Users extends Table[User]("USER") {
-//  lazy val database = Database.forDataSource(DB.getDataSource())
-//
-//  // -- Parsers
-//
-//  def email = column[String]("EMAIL", O.PrimaryKey)
-//  def name = column[String]("NAME")
-//  def password = column[String]("PASSWORD")
-//
-//  def * = email ~ name ~ password <> (User.apply _, User.unapply _)
-//  // -- Queries
-//
-//  /**
-//   * Retrieve a User from email.
-//   */
-//  def findByEmail(email: String): Option[User] = {
-//    database withSession { implicit session =>
-//      val q1 = for (u <- Users if u.email === email) yield u
-//      q1.list.headOption.asInstanceOf[Option[User]]
-//    }
-//  }
-//
-//  /**
-//   * Retrieve all users.
-//   */
-//  def findAll = {
-//    for (u <- Users) yield u
-//  }
-//
-//  /**
-//   * Authenticate a User.
-//   */
-//  def authenticate(email: String, password: String): Int = {
-//    database withSession { implicit session =>
-//      val q1 = for (u <- Users if u.email === email && u.password === password) yield u
-//      println("^^^^^^^^" + Query(q1.length).first)
-//      Query(q1.length).first
-//    }
-//  }
-//}
+object Users {
+
+  // load users from databases.json file
+  lazy val users = loadConnectionInfo
+
+  // authenticate by attempting to log into the database
+  //  def authenticate(conn: String, password: String): Option[javax.sql.DataSource] = {
+  //    println(s"authenticating : ${conn} , ${password}")
+  //    try {
+  //      val user = users.find(u => u.name == Some(conn))
+  //      if( user.isDefined) {
+  //        println(user.toString)
+  //        var ds: javax.sql.DataSource = getOracleDataSource(user.get, password)
+  //        return Some(ds)
+  //      }
+  //      None
+  //    } catch {
+  //      case _ =>
+  //        println("datasource open failed")
+  //        None
+  //    }
+  //  }
+
+  def authenticate(connName: String, password: String): Option[javax.sql.DataSource] = {
+    println(s"authenticating : ${connName} , ${password}")
+    // TODO : eventually, do not hardcode pw
+    if (authenticatePassword(password) != true)
+      return None
+
+    try {
+      println("***** getting datasource")
+      val dataSource = JDBC.getDataSource(connName)
+      println("***** datasource retrieved")
+      return Some(dataSource)
+    } catch {
+      case e: java.sql.SQLException =>
+        println("sql exception : " + e)
+        None
+    }
+  }
+
+  def authenticatePassword(password: String): Boolean = {
+    try {
+      var ap = ConfigFactory.load().getString("app.password")
+      if (ap != null && password.equals(ap))
+        return true
+      false
+    } catch {
+      case e : com.typesafe.config.ConfigException =>
+        println("config item 'app.password' not found")
+        false
+    }
+  }
+
+  // gets oracle pooled datasource
+  def getOracleDataSource(user: User, password: String): javax.sql.DataSource = {
+    val ds: OracleConnectionPoolDataSource = new OracleConnectionPoolDataSource()
+    ds.setURL(user.url)
+    ds.setUser(user.user)
+    ds.setPassword(password)
+    ds.setDataSourceName("default")
+    ds
+  }
+
+  // parses json file, returns user seq
+  def loadConnectionInfo(): Seq[User] = {
+    // read the entire file into a string
+    val lines = io.Source.fromFile("public/startupData/databases.json").mkString
+    // create a sequence of JsValue(s)
+    val jsObjectSeq: Seq[JsObject] = Json.parse(lines).as[Seq[JsObject]]
+    println(s"read databases.json, got ${jsObjectSeq.size} lines")
+    jsObjectSeq.map(row => User.apply(
+      (row \ "name").asOpt[String].getOrElse("none"),
+      (row \ "url").asOpt[String].getOrElse("none"),
+      (row \ "user").asOpt[String].getOrElse("none")))
+  }
+}
+

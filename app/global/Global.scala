@@ -7,6 +7,7 @@ import play.api.libs.json._
 
 object Global {
 
+  
   def getSource(fname: String): Option[BufferedSource] = {
     try {
       Some(Source.fromFile(s"public/${fname}"))

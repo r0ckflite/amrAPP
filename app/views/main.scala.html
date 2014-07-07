@@ -2,7 +2,8 @@
 <html>
     <head>
 
-        <!--  bootstrap  -->
+<!-- ================================== -->
+<!-- twitter bootstrap -->
         <meta charset="utf-8">
     	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +17,13 @@
       		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     	<![endif]-->
-    	
+<!-- ================================== -->
+<!-- Kendo ui -->    
+		<!-- Common Kendo UI Web CSS -->
+		<link href="@routes.Assets.at("kendo/styles/kendo.common.min.css")" rel="stylesheet" />
+		<!-- Default Kendo UI Web theme CSS -->
+		<link href="@routes.Assets.at("kendo/styles/kendo.default.min.css")" rel="stylesheet" />
+<!-- ================================== -->
     	<style>
     		body {
   				padding-top: 50px;
@@ -45,6 +52,9 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+          <ul class="nav navbar-nav pull-right">
+          	<li><a href="logout">logout</a></li>
+          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
@@ -59,7 +69,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="@routes.Assets.at("js/jquery-1.11.1.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jquery-1.11.1.min.js")"></script>
     <script src="@routes.Assets.at("bootstrap-3.1.1-dist/js/bootstrap.min.js")"></script>
+	<script src="@routes.Assets.at("kendo/js/kendo.web.min.js")"></script>	
   </body>
 </html>

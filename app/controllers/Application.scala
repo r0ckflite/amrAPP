@@ -4,11 +4,17 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
-
 import models._
 import views._
+import play.api.libs.json._
+import org.h2.engine.Database
+import play.api.db.DB
+import play.api.Play.current
+import global._
 
 object Application extends Controller with Secured {
+
+  var ds: javax.sql.DataSource = null
 
   lazy val loginForm = Form(
     tuple(
@@ -17,7 +23,13 @@ object Application extends Controller with Secured {
         case (conn, password) => {
           println("connection=" + conn + " password=" + password);
           val userList = Users.authenticate(conn, password)
-          userList == 1
+          if (userList.isDefined) {
+            // set the ds and user is authenticated
+            var ds = userList.get
+            true
+          } else {
+            false
+          }
         }
         case _ => false
       }))
@@ -44,9 +56,15 @@ object Application extends Controller with Secured {
   }
 
   def index = IsAuthenticated { username =>
-    implicit request => Ok(views.html.index())
+   implicit request => {
+     println("username = " + username)
+      JDBC.withConnection(username) { implicit connection =>
+        val configItems = models.SienaConfig.configs2(connection)
+        configItems.foreach( row => println(row))
+      }
+      Ok(views.html.index())
+    }
   }
-
 }
 
 /**
@@ -63,7 +81,6 @@ trait Secured {
   /**
    * Redirect to login if the use in not authorized.
    */
-  //def onUnauthorized(request: RequestHeader): Result
   def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.login)
 
   def IsAuthenticated(f: => String => Request[AnyContent] => Result) =
