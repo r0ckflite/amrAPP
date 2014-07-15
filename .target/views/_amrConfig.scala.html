@@ -1,0 +1,43 @@
+@(form: Form[AmrConfig])
+
+@helper.form(action = routes.Application.submit) {
+<select id="foo" name="foo">
+	<option value="">---</option>
+	<option value="both">Both</option>
+	<option value="restoration">Restoration</option>
+	<option value="outage">Outage</option>
+</select>
+
+<!-- HTML element from which the Kendo DatePicker would be initialized -->
+<input id="datepicker" />
+
+<h4>OA Version</h4>
+<input id="oaVersion" placeholder="Select OA Version" />
+}
+
+<!--  Scripts to build input devices -->
+<script>
+	$(function() {
+		// Initialize the Kendo DatePicker by calling the kendoDatePicker jQuery plugin
+		$("#datepicker").kendoDatePicker();
+	});
+
+	$("#oaVersion").kendoDropDownList({
+		dataTextField : "text",
+		dataValueField : "value",
+		dataSource : [ {
+			text : "OA_OD3J",
+			value : "3j"
+		}, {
+			text : "OA_OD3X",
+			value : "3x"
+		}, {
+			text : "OA_OD41",
+			value : "4"
+		} ],
+		filter : "contains",
+		suggest : true,
+		index : 3
+	});
+</script>
+

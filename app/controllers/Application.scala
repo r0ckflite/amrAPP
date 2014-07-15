@@ -11,10 +11,29 @@ import org.h2.engine.Database
 import play.api.db.DB
 import play.api.Play.current
 import global._
+import play.api.data._
+import play.api.data.Forms._
+import play.api.data.format.Formats._
 
 object Application extends Controller with Secured {
 
   var ds: javax.sql.DataSource = null
+
+  lazy val amrConfigForm = Form(
+    mapping(
+      "oaVersion" -> text,
+      "unsolicitedEvents" -> text,
+      "outageResponse" -> text,
+      "manualResponse" -> text,
+      "validateDups" -> boolean,
+      "valudateEventDate" -> boolean,
+      "disabletableLevel" -> number,
+      "suspendedLoadCIS" -> boolean,
+      "outageEventEnable" -> boolean,
+      "restoreEventEnable" -> boolean,
+      "repingOnOutage" -> number,
+      "repingDelay" -> number,
+      "repingWindow" -> number)(AmrConfig.apply)(AmrConfig.unapply))
 
   lazy val loginForm = Form(
     tuple(
@@ -47,6 +66,10 @@ object Application extends Controller with Secured {
       user => Redirect(routes.Application.index).withSession("conn" -> user._1))
   }
 
+  def submit = Action { implicit request =>
+    Ok(views.html.index(amrConfigForm))
+  }
+
   /**
    * Logout and clean the session.
    */
@@ -56,13 +79,16 @@ object Application extends Controller with Secured {
   }
 
   def index = IsAuthenticated { username =>
-   implicit request => {
-     println("username = " + username)
-      JDBC.withConnection(username) { implicit connection =>
-        val configItems = models.SienaConfig.configs2(connection)
-        configItems.foreach( row => println(row))
-      }
-      Ok(views.html.index())
+    implicit request => {
+      println("username = " + username)
+
+      //      JDBC.withConnection(username) { implicit connection =>
+      //        val configItems = models.SienaConfig.configs2(connection)
+      //        configItems.foreach( row => println(row))
+      //      }
+
+      val c = amrConfigForm.fill(AmrConfig("3x", "both", "outage", "outage", true, true, 21, true, false, false, 2, 30, 6))
+      Ok(views.html.index(c))
     }
   }
 }

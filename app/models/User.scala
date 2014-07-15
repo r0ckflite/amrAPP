@@ -34,24 +34,6 @@ object Users {
   // load users from databases.json file
   lazy val users = loadConnectionInfo
 
-  // authenticate by attempting to log into the database
-  //  def authenticate(conn: String, password: String): Option[javax.sql.DataSource] = {
-  //    println(s"authenticating : ${conn} , ${password}")
-  //    try {
-  //      val user = users.find(u => u.name == Some(conn))
-  //      if( user.isDefined) {
-  //        println(user.toString)
-  //        var ds: javax.sql.DataSource = getOracleDataSource(user.get, password)
-  //        return Some(ds)
-  //      }
-  //      None
-  //    } catch {
-  //      case _ =>
-  //        println("datasource open failed")
-  //        None
-  //    }
-  //  }
-
   def authenticate(connName: String, password: String): Option[javax.sql.DataSource] = {
     println(s"authenticating : ${connName} , ${password}")
     // TODO : eventually, do not hardcode pw

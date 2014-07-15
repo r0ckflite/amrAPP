@@ -30,10 +30,6 @@ object SienaConfig {
       }
   }
 
-//  def configs : List[SienaConfig] = JDBC.withConnection2("ventyx") { implicit conn =>
-//    SQL("select item, default_value, value, description, multiples_allowed from siena.siena_config").as(config *)
-//  }
-  
   def configs2(implicit conn: Connection) : List[SienaConfig] = {
     SQL("select item, default_value, value, description, multiples_allowed from siena.siena_config").as(config *)
   }
