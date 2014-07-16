@@ -1,4 +1,4 @@
-@(form: Form[AmrConfig])
+@(form: Form[AmrConfig], bld: Seq[models.AmrConfig.elements])
 <html class="k-content">
     <head>
 
@@ -70,73 +70,12 @@
     		<h1>Bootstrap starter template</h1>
 		</div>
 		<div>
-		
-@helper.form(action = routes.Application.submit) {
-<select id="foo" name="foo">
-	<option value="">---</option>
-	<option value="both">Both</option>
-	<option value="restoration">Restoration</option>
-	<option value="outage">Outage</option>
-</select>
-
-<!-- HTML element from which the Kendo DatePicker would be initialized -->
-<input id="datepicker" />
-
-<h4>OA Version</h4>
-<input id="oaVersion" placeholder="Select OA Version" />
-<p>@form("unsolicitedEvents").value</p>
-<h4>Unsolicited Events</h4>
-<input id="version" placeholder="select version"/>
-
-		
+			@helper.form(action = routes.Application.submit) {
+				@_amrConfig(form)	
+			}		
 		</div>		
 	</div>
 	
-<script>
-	$(function() {
-		// Initialize the Kendo DatePicker by calling the kendoDatePicker jQuery plugin
-		$("#datepicker").kendoDatePicker();
-	});
-
-	$("#oaVersion").kendoDropDownList({
-		dataTextField : "text",
-		dataValueField : "value",
-		dataSource : [ {
-			text : "OA_OD3J",
-			value : "3j"
-		}, {
-			text : "OA_OD3X",
-			value : "3x"
-		}, {
-			text : "OA_OD41",
-			value : "4"
-		} ],
-		filter : "contains",
-		suggest : true,
-		index : 3
-	});
-	
-	$("#version").kendoDropDownList({
-		dataTextField : "text",
-		dataValueField : "value",
-		dataSource : [ {
-			text : "OA_OD3J",
-			value : "3j"
-		}, {
-			text : "OA_OD3X",
-			value : "3x"
-		}, {
-			text : "OA_OD41",
-			value : "4"
-		} ],
-		value: "@form("oaVersion").value",
-		filter : "contains",
-		suggest : true,
-		index : 3
-	});
-</script>
-
-}
 
   </body>
 </html>

@@ -1,43 +1,111 @@
 @(form: Form[AmrConfig])
 
-@helper.form(action = routes.Application.submit) {
-<select id="foo" name="foo">
-	<option value="">---</option>
-	<option value="both">Both</option>
-	<option value="restoration">Restoration</option>
-	<option value="outage">Outage</option>
-</select>
-
-<!-- HTML element from which the Kendo DatePicker would be initialized -->
-<input id="datepicker" />
-
 <h4>OA Version</h4>
-<input id="oaVersion" placeholder="Select OA Version" />
-}
+<span><input id="oaVersion" placeholder="Select OA Version" title="Version of Multispeak being used"/></span>
+<h4>Unsolicited Events</h4>
+<span><input id="unsolicitedEvents" placeholder="xxx" /></span>
+<h4>Outage Response</h4>
+<span><input id="outageResponse" placeholder="xxx" /></span>
+<h4>Manual Response</h4>
+<span><input id="manualResponse" placeholder="xxx" /></span>
+<h4>Validate Dups?</h4>
+<span><input id=validateDups placeholder="xxx" /></span>
+<h4>Validate Evenet Date?</h4>
+<span><input id="validateEventDate" placeholder="xxx" /></span>
+<h4>Disable Tag Level</h4>
+<span><input id="disableTagLevel" placeholder="xxx" /></span>
+<h4>Suspended Load CIS?</h4>
+<span><input id="suspendedLoadCIS" placeholder="xxx" /></span>
+<h4>Outage Event Enable?</h4>
+<span><input id="outageEventEnable" placeholder="xxx" /></span>
+<h4>Restore Event Enable?</h4>
+<span><input id="restoreEventEnable" placeholder="xxx" /></span>
+<h4>Reping On Outage</h4>
+<span><input id="repingOnOutage" placeholder="xxx"/></span>
+<h4>Reping Delay</h4>
+<span><input id="repingDelay" placeholder="xxx" value=""/></span>
+<h4>Reping Window</h4>
+<span><input id="repingWindow" placeholder="xxx" /></span>
+
+<p>'@form("oaVersion").value'</p>
+<style>
+.note-button {
+  margin-left: 5px;
+  }
+</style>
 
 <!--  Scripts to build input devices -->
 <script>
-	$(function() {
-		// Initialize the Kendo DatePicker by calling the kendoDatePicker jQuery plugin
-		$("#datepicker").kendoDatePicker();
-	});
+function createDropDown(id, source, value) {
+	var combo = $("#" + id);
+	combo.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
 
-	$("#oaVersion").kendoDropDownList({
-		dataTextField : "text",
-		dataValueField : "value",
-		dataSource : [ {
-			text : "OA_OD3J",
-			value : "3j"
-		}, {
-			text : "OA_OD3X",
-			value : "3x"
-		}, {
-			text : "OA_OD41",
-			value : "4"
-		} ],
-		filter : "contains",
-		suggest : true,
-		index : 3
-	});
+	combo.kendoDropDownList({
+        dataTextField: "text",
+        dataValueField: "value",
+        dataSource: source,
+        filter: "contains",
+        suggest: true,
+        index: 3,
+        value: value
+    });
+
+}
+
+function createNumericTextField(id, min, max, format, val) {
+	var t = $("#" + id)
+	t.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
+
+    t.kendoNumericTextBox({
+        min: min,
+        max: max,
+        step: 1,
+        value: val,
+        format: format
+    });
+}
+
+$(function () {
+    tf = [{
+        text: "True",
+        value: "true"
+    }, {
+        text: "False",
+        value: "false"
+    }];
+    rob = [{
+        text: "Outage",
+        value: "outage"
+    }, {
+        text: "Restore",
+        value: "restore"
+    }, {
+        text: "Both",
+        value: "both"
+    }];
+
+    createDropDown("oaVersion", [{
+        text: "OA_OD3J",
+        value: "3j"
+    }, {
+        text: "OA_OD3X",
+        value: "3x"
+    }, {
+        text: "OA_OD41",
+        value: "4"
+    }]);
+    createDropDown("unsolicitedEvents", tf, '@form("unsolicitedEvents").value');
+    createDropDown("outageResponse", rob, '@form("outageResponse").value');
+    createDropDown("manualResponse", rob, '@form("manualResponse").value');
+    createDropDown("validateDups", tf, '@form("validateDups").value');
+    createDropDown("validateEventDate", tf, '@form("validateEventDate").value');
+    createDropDown("suspendedLoadCIS", tf, '@form("suspendedLoadCIS").value');
+    createDropDown("outageEventEnable", tf, '@form("outageEventEnable").value');
+    createDropDown("restoreEventEnable", tf, '@form("restoreEventEnable").value');
+    createNumericTextField("disableTagLevel", 0, 21, "##", '@form("disableTagLevel").value');
+    createNumericTextField("repingOnOutage", 0, 10, "## times", '@form("repingOnOutage").value');
+    createNumericTextField("repingDelay", 0, 60, "## mins", '@form("repingDelay").value');
+    createNumericTextField("repingWindow", 0, 60, "## mins", '@form("repingWindow").value');
+});
 </script>
 

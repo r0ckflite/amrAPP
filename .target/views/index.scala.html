@@ -1,4 +1,4 @@
-@(form: Form[AmrConfig])
+@(form: Form[AmrConfig], bld: models.AmrConfig.formElements)
 <html class="k-content">
     <head>
 
@@ -84,8 +84,10 @@
 
 <h4>OA Version</h4>
 <input id="oaVersion" placeholder="Select OA Version" />
-@helper.inputText(form("oaVersion"))
-}
+<p>@form("unsolicitedEvents").value</p>
+<h4>Unsolicited Events</h4>
+<input id="version" placeholder="select version"/>
+
 		
 		</div>		
 	</div>
@@ -113,7 +115,28 @@
 		suggest : true,
 		index : 3
 	});
+	
+	$("#version").kendoDropDownList({
+		dataTextField : "text",
+		dataValueField : "value",
+		dataSource : [ {
+			text : "OA_OD3J",
+			value : "3j"
+		}, {
+			text : "OA_OD3X",
+			value : "3x"
+		}, {
+			text : "OA_OD41",
+			value : "4"
+		} ],
+		value: "@form("oaVersion").value",
+		filter : "contains",
+		suggest : true,
+		index : 3
+	});
 </script>
+
+}
 
   </body>
 </html>

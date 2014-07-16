@@ -19,21 +19,7 @@ object Application extends Controller with Secured {
 
   var ds: javax.sql.DataSource = null
 
-  lazy val amrConfigForm = Form(
-    mapping(
-      "oaVersion" -> text,
-      "unsolicitedEvents" -> text,
-      "outageResponse" -> text,
-      "manualResponse" -> text,
-      "validateDups" -> boolean,
-      "valudateEventDate" -> boolean,
-      "disabletableLevel" -> number,
-      "suspendedLoadCIS" -> boolean,
-      "outageEventEnable" -> boolean,
-      "restoreEventEnable" -> boolean,
-      "repingOnOutage" -> number,
-      "repingDelay" -> number,
-      "repingWindow" -> number)(AmrConfig.apply)(AmrConfig.unapply))
+
 
   lazy val loginForm = Form(
     tuple(
@@ -67,7 +53,7 @@ object Application extends Controller with Secured {
   }
 
   def submit = Action { implicit request =>
-    Ok(views.html.index(amrConfigForm))
+    Ok(views.html.index(AmrConfig.amrConfigForm, AmrConfig.formElements))
   }
 
   /**
@@ -87,8 +73,8 @@ object Application extends Controller with Secured {
       //        configItems.foreach( row => println(row))
       //      }
 
-      val c = amrConfigForm.fill(AmrConfig("3x", "both", "outage", "outage", true, true, 21, true, false, false, 2, 30, 6))
-      Ok(views.html.index(c))
+      val c = AmrConfig.amrConfigForm.fill(AmrConfig("3x", "both", "outage", "outage", true, true, 21, true, false, false, 2, 30, 6))
+      Ok(views.html.index(c, AmrConfig.formElements))
     }
   }
 }
