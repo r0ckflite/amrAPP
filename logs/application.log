@@ -1,6 +1,48 @@
-2014-07-16 14:48:33,387 - [INFO] - from play in pool-196-thread-5 
+2014-07-17 16:58:51,677 - [INFO] - from play in pool-128-thread-1 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-07-16 14:48:36,855 - [INFO] - from play in play-internal-execution-context-1 
+2014-07-17 16:58:56,927 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
+
+2014-07-17 16:58:57,322 - [DEBUG] - from com.jolbox.bonecp.BoneCPDataSource in play-akka.actor.default-dispatcher-3 
+JDBC URL = jdbc:oracle:thin:@localhost:1521:siena, Username = siena_web_services, partitions = 1, max (per partition) = 30, min (per partition) = 5, idle max age = 10 min, idle test period = 1 min, strategy = DEFAULT
+
+2014-07-17 16:59:00,326 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-3 
+select item, default_value, value, description, multiples_allowed from siena.siena_config
+
+2014-07-17 16:59:12,679 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.oa_version', '30x')}
+
+2014-07-17 16:59:12,740 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena.trouble.amr.unsolicited_event', '')}
+
+2014-07-17 16:59:12,776 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena.troube.amr.outage_response', '')}
+
+2014-07-17 16:59:12,819 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena.trouble.amr.manual_response', '')}
+
+2014-07-17 16:59:12,857 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.reping_on_outage_count', '')}
+
+2014-07-17 16:59:12,893 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.reping_delay', '')}
+
+2014-07-17 16:59:12,931 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.validate_dups', '')}
+
+2014-07-17 16:59:12,966 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.validate_event_date', '')}
+
+2014-07-17 16:59:13,003 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.suspended_meters.load_from_cis', '')}
+
+2014-07-17 16:59:13,039 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.outage_event.enable', '')}
+
+2014-07-17 16:59:13,075 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
+{call updateConfig('siena_amr.restore_event.enable', '')}
+
+2014-07-17 16:59:13,120 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-9 
+select item, default_value, value, description, multiples_allowed from siena.siena_config
 

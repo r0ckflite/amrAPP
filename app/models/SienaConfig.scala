@@ -30,7 +30,7 @@ object SienaConfig {
       }
   }
 
-  def configs2(implicit conn: Connection) : List[SienaConfig] = {
+  def configs2(implicit conn: Connection): List[SienaConfig] = {
     SQL("select item, default_value, value, description, multiples_allowed from siena.siena_config").as(config *)
   }
 }
@@ -41,9 +41,18 @@ class SienaConfig(
   var value: Option[String],
   var description: Option[String],
   var multiplesAllowed: Option[BigDecimal]) {
-  
+
   override def toString(): String = {
     "item: " + item + ", defaultValue: " + defaultValue + ", value: " + value + ", description: " + description + ", multiplesAllowed: " + multiplesAllowed
+  }
+
+  def getValue(): Option[String] = {
+    if (value.isDefined) value else defaultValue
+  }
+
+  def getValueString(): String = {
+    println("DEBUG : ***** item = " + item + ", value = " + value + ", defaultValue = " + defaultValue)
+    if (value.isDefined) value.get else if (defaultValue.isDefined) defaultValue.get else ""
   }
 }
     

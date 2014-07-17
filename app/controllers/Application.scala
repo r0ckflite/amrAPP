@@ -19,8 +19,6 @@ object Application extends Controller with Secured {
 
   var ds: javax.sql.DataSource = null
 
-
-
   lazy val loginForm = Form(
     tuple(
       "conn" -> text,
@@ -52,8 +50,23 @@ object Application extends Controller with Secured {
       user => Redirect(routes.Application.index).withSession("conn" -> user._1))
   }
 
-  def submit = Action { implicit request =>
-    Ok(views.html.index(AmrConfig.amrConfigForm, AmrConfig.formElements))
+  def submit = IsAuthenticated { username => implicit request =>
+    println("the form has been submitted!")
+    val config = AmrConfig.amrConfigForm.bindFromRequest.fold(
+        formWithErrors => {
+          // binding failure, retrieved form with errors:
+          println("form get failed!, form is : " + formWithErrors.errors)
+          BadRequest(views.html.index(formWithErrors, AmrConfig.formElements))
+          // TODO : Have an error page or error areas within the form
+        }, formData => {
+          // save form data back to db!
+          JDBC.withConnection(username) { implicit connection =>
+            AmrConfig.saveForm(connection, formData)
+          }
+          Redirect(routes.Application.index())
+        }
+    )
+    Redirect(routes.Application.index())
   }
 
   /**
@@ -68,13 +81,12 @@ object Application extends Controller with Secured {
     implicit request => {
       println("username = " + username)
 
-      //      JDBC.withConnection(username) { implicit connection =>
-      //        val configItems = models.SienaConfig.configs2(connection)
-      //        configItems.foreach( row => println(row))
-      //      }
+      // load all config items from db, might want to filterr this query
+      val configItems = JDBC.withConnection(username) { implicit connection =>
+        models.SienaConfig.configs2(connection)
+      }
 
-      val c = AmrConfig.amrConfigForm.fill(AmrConfig("3x", "both", "outage", "outage", true, true, 21, true, false, false, 2, 30, 6))
-      Ok(views.html.index(c, AmrConfig.formElements))
+      Ok(views.html.index(AmrConfig.loadForm(configItems), AmrConfig.formElements))
     }
   }
 }

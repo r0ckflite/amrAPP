@@ -1,33 +1,33 @@
 @(form: Form[AmrConfig])
 
 <h4>OA Version</h4>
-<span><input id="oaVersion" placeholder="Select OA Version" title="Version of Multispeak being used"/></span>
+<span><input id="oaVersionHolder" place="Select OA Version" title="Version of Multispeak being used"/></span>
 <h4>Unsolicited Events</h4>
-<span><input id="unsolicitedEvents" placeholder="xxx" /></span>
+<span><input id="unsolicitedEventsHolder" place="---" /></span>
 <h4>Outage Response</h4>
-<span><input id="outageResponse" placeholder="xxx" /></span>
+<span><input id="outageResponseHolder" place="---" /></span>
 <h4>Manual Response</h4>
-<span><input id="manualResponse" placeholder="xxx" /></span>
+<span><input id="manualResponseHolder" place="---" /></span>
 <h4>Validate Dups?</h4>
-<span><input id=validateDups placeholder="xxx" /></span>
+<span><input id="validateDupsHolder" place="---" /></span>
 <h4>Validate Evenet Date?</h4>
-<span><input id="validateEventDate" placeholder="xxx" /></span>
+<span><input id="validateEventDateHolder" place="---" /></span>
 <h4>Disable Tag Level</h4>
-<span><input id="disableTagLevel" placeholder="xxx" /></span>
+<span><input id="disableTagLevelHolder" place="---" /></span>
 <h4>Suspended Load CIS?</h4>
-<span><input id="suspendedLoadCIS" placeholder="xxx" /></span>
+<span><input id="suspendedLoadCISHolder" place="---" /></span>
 <h4>Outage Event Enable?</h4>
-<span><input id="outageEventEnable" placeholder="xxx" /></span>
+<span><input id="outageEventEnableHolder" place="---" /></span>
 <h4>Restore Event Enable?</h4>
-<span><input id="restoreEventEnable" placeholder="xxx" /></span>
+<span><input id="restoreEventEnableHolder" place="---" /></span>
 <h4>Reping On Outage</h4>
-<span><input id="repingOnOutage" placeholder="xxx"/></span>
+<span><input id="repingOnOutageHolder" place="---"/></span>
 <h4>Reping Delay</h4>
-<span><input id="repingDelay" placeholder="xxx" value=""/></span>
+<span><input id="repingDelayHolder" place="---" value=""/></span>
 <h4>Reping Window</h4>
-<span><input id="repingWindow" placeholder="xxx" /></span>
+<span><input id="repingWindowHolder" place="---" value=""/></span>
+<button class="k-button" type="submit">Submit</button>
 
-<p>'@form("oaVersion").value'</p>
 <style>
 .note-button {
   margin-left: 5px;
@@ -37,7 +37,7 @@
 <!--  Scripts to build input devices -->
 <script>
 function createDropDown(id, source, value) {
-	var combo = $("#" + id);
+	var combo = $('#' + id + "Holder");
 	combo.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
 
 	combo.kendoDropDownList({
@@ -47,61 +47,51 @@ function createDropDown(id, source, value) {
         filter: "contains",
         suggest: true,
         index: 3,
-        value: value
+        value: value,
+        change: function(e) {
+        	$("#" + id).val(this.value())
+        }
     });
-
+	
+	// place values here on change for form submittal
+	combo.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
 }
 
 function createNumericTextField(id, min, max, format, val) {
-	var t = $("#" + id)
-	t.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
+	var text = $("#" + id + "Holder")
+	text.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
 
-    t.kendoNumericTextBox({
+    text.kendoNumericTextBox({
         min: min,
         max: max,
         step: 1,
         value: val,
         format: format
     });
+    
+	text.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
+}
+
+function convertBoolean(value) {
+	if( value == "0") return "false"
+	else if( value == "1" ) return "true"
+	else return "---"
 }
 
 $(function () {
-    tf = [{
-        text: "True",
-        value: "true"
-    }, {
-        text: "False",
-        value: "false"
-    }];
-    rob = [{
-        text: "Outage",
-        value: "outage"
-    }, {
-        text: "Restore",
-        value: "restore"
-    }, {
-        text: "Both",
-        value: "both"
-    }];
-
-    createDropDown("oaVersion", [{
-        text: "OA_OD3J",
-        value: "3j"
-    }, {
-        text: "OA_OD3X",
-        value: "3x"
-    }, {
-        text: "OA_OD41",
-        value: "4"
-    }]);
-    createDropDown("unsolicitedEvents", tf, '@form("unsolicitedEvents").value');
+    tf = [{text: "---", value: ""},{text: "True",value: "true"}, {text: "False",value: "false"}];
+    rob = [{text: "---", value: ""},{text: "Outage",value: "outage"}, {text: "Restore",value: "restore"}, {text: "Both",value: "both"}, {text: "Off",value: "off"}];
+    version = [{text: "---", value: ""},{text: "OA_OD3J",value: "30j"}, {text: "OA_OD3X",value: "30x"}, {text: "OA_OD41",value: "4"}];
+    
+    createDropDown("oaVersion", version, '@form("oaVersion").value');
+    createDropDown("unsolicitedEvents", rob, '@form("unsolicitedEvents").value');
     createDropDown("outageResponse", rob, '@form("outageResponse").value');
     createDropDown("manualResponse", rob, '@form("manualResponse").value');
-    createDropDown("validateDups", tf, '@form("validateDups").value');
-    createDropDown("validateEventDate", tf, '@form("validateEventDate").value');
-    createDropDown("suspendedLoadCIS", tf, '@form("suspendedLoadCIS").value');
-    createDropDown("outageEventEnable", tf, '@form("outageEventEnable").value');
-    createDropDown("restoreEventEnable", tf, '@form("restoreEventEnable").value');
+    createDropDown("validateDups", tf, convertBoolean('@form("validateDups").value'));
+    createDropDown("validateEventDate", tf, convertBoolean('@form("validateEventDate").value'));
+    createDropDown("suspendedLoadCIS", tf, convertBoolean('@form("suspendedLoadCIS").value'));
+    createDropDown("outageEventEnable", tf, convertBoolean('@form("outageEventEnable").value'));
+    createDropDown("restoreEventEnable", tf, convertBoolean('@form("restoreEventEnable").value'));
     createNumericTextField("disableTagLevel", 0, 21, "##", '@form("disableTagLevel").value');
     createNumericTextField("repingOnOutage", 0, 10, "## times", '@form("repingOnOutage").value');
     createNumericTextField("repingDelay", 0, 60, "## mins", '@form("repingDelay").value');
