@@ -1,0 +1,108 @@
+@()
+
+<header class="navbar navbar-inverse navbar-fixed-top report-nav"
+	role="banner">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">AMR Configuration</a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="/">Home</a></li>
+				<li><a href="#about">About</a></li>
+				<li><a href="#contact">Contact</a></li>
+				<li id="trouble"><a href="/trouble">Trouble</a>
+				<li id="amr"><a href="/amr">AMR</a>
+			</ul>
+			<ul class="nav navbar-nav pull-right">
+				<li><input class="themeChooser" value="default" /></li>
+				<li><a href="logout">logout</a></li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+</header>
+<script>
+	$(document)
+			.ready(
+					function() {
+						// theme chooser drop-down
+						$(".themeChooser").kendoDropDownList(
+								{
+								    dataTextField: "text",
+								    dataValueField: "value",
+								    dataSource: [
+								        { text: "Black", value: "black" },
+								        { text: "Blue Opal", value: "blueopal" },
+								        { text: "Default", value: "default" },
+								        { text: "Metro", value: "metro" },
+								        { text: "Metro Black", value: "metroblack"},
+								        { text: "Silver", value: "silver" },
+								        { text: "Moonlight", value: "moonlight"}
+								    ],
+									change : function(e) {
+										var theme = (this.value() || "default")
+												.toLowerCase();
+
+										changeTheme(theme);
+									}
+								});
+
+						// loads new stylesheet
+						function changeTheme(skinName, animate) {
+							var doc = document, kendoLinks = $(
+									"link[href*='kendo.']", doc
+											.getElementsByTagName("head")[0]), commonLink = kendoLinks
+									.filter("[href*='kendo.common']"), skinLink = kendoLinks
+									.filter(":not([href*='kendo.common'])"), href = location.href, skinRegex = /kendo\.\w+(\.min)?\.css/i, extension = skinLink
+									.attr("rel") === "stylesheet" ? ".css"
+									: ".less", url = commonLink.attr("href")
+									.replace(
+											skinRegex,
+											"kendo." + skinName + "$1"
+													+ extension), exampleElement = $("#example");
+
+							function preloadStylesheet(file, callback) {
+								var element = $(
+										"<link rel='stylesheet' media='print' href='"
+												+ file + "'").appendTo("head");
+
+								setTimeout(function() {
+									callback();
+									element.remove();
+								}, 100);
+							}
+
+							function replaceTheme() {
+								var oldSkinName = $(doc).data("kendoSkin"), newLink;
+
+/* 								if ($.browser.msie) {
+									newLink = doc.createStyleSheet(url);
+								} else { */
+									newLink = skinLink.eq(0).clone().attr(
+											"href", url);
+			/* 					} */
+
+								newLink.insertBefore(skinLink[0]);
+								skinLink.remove();
+
+								$(doc.documentElement).removeClass(
+										"k-" + oldSkinName).addClass(
+										"k-" + skinName);
+							}
+
+							if (animate) {
+								preloadStylesheet(url, replaceTheme);
+							} else {
+								replaceTheme();
+							}
+						}
+						;
+					});
+</script>

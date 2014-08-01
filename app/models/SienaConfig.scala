@@ -19,6 +19,10 @@ object SienaConfig {
     new SienaConfig(item, defaultValue, value, description, multiplesAllowed)
   }
 
+  def mapConfigToJson(items : Seq[SienaConfig]) = {    
+    Map(items map { sc => sc.item.replace('.', '_') -> sc.getValueString }: _*)
+  }
+  
   val config = {
     get[String]("item") ~
       get[Option[String]]("default_value") ~
@@ -30,9 +34,22 @@ object SienaConfig {
       }
   }
 
-  def configs2(implicit conn: Connection): List[SienaConfig] = {
-    SQL("select item, default_value, value, description, multiples_allowed from siena.siena_config").as(config *)
+  def getAllConfigItems(implicit conn: Connection): List[SienaConfig] = {
+    val query = "select item, default_value, value, description, multiples_allowed from siena.siena_config"
+    SQL(query).as(config *)
   }
+
+  def getValue(c: Seq[SienaConfig], name: String, defaultValue: String): String =
+    c.filter(c => c.item.equals(name)).lift(0).map(_.getValueString()).getOrElse(defaultValue)
+
+  def getValue(c: Seq[SienaConfig], name: String): String = getValue(c, name, "---")
+  
+  def getConfigItems(implicit conn: Connection, items: Seq[String]): List[SienaConfig] = {
+    val inClause = items.mkString("'", "','", "'") // gives us 'foo','bar','xyz'
+    val query = s"select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ($inClause)"
+    SQL(query).as(config *)
+  }
+
 }
 
 class SienaConfig(

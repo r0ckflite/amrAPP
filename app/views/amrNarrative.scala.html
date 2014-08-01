@@ -1,0 +1,629 @@
+@_main("Home Page") @_nav()
+
+<style>
+.hilite {
+	color: yellow;
+	font-weight: bold;
+}
+</style>
+
+<body class="k-content col-md-3">
+
+	<div class="container">
+		<div class="row">
+			<h2>AMR Rules</h2>
+			<ul>
+				<li>remote AMR endpoint is <span class="hilite"><span
+						id="siena_amr_HTTP_Server">...</span><span
+						id="siena_amr_HTTP_Path">...</span></span></li>
+				<li>oracle is pinging remote amr server using version <span
+					class="hilite" id="siena_amr_oa_version">...</span> for
+					InitiateOutageDetectionEvent
+					<ul>
+						<li>30x requires a response url. Yours is <span
+							class="hilite" id="siena_amr_oa_response_url">Not Set.
+								Please set it!</span></li>
+					</ul>
+				</li>
+				<li>Currently od_tools.process_events is <span class="hilite"
+					id="foo"></span>
+					<ul>
+						<li>od_event.disable.tag_level (<span class="hilite"
+							id="od_event_disable_tag_level">...</span>) is <span
+							class="hilite" id="isDisabled1">...</span>. Processing of events
+							is currently <span class="hilite" id="isDisabled">...</span></li>
+					</ul>
+				</li>
+			</ul>
+			<ul>
+				<li>site processing rules
+					<ul>
+						<li>All : processPingBackEvent</li>
+						<li>JEMC : validateAccountMapped</li>
+						<li>All : filterPingReplies</li>
+						<li>LEC, JEMC : validateEventDate</li>
+						<li>JEMC : validateDuplicates</li>
+					</ul>
+			</ul>
+			</li>
+
+			<ul>
+				<li>siena.trouble.amr.unsolicited_event is <span class="hilite"
+					id="siena_trouble_amr_unsolicited_event">value</span>
+					<ul>
+						<li>Restoration events for unsolicited pings <span
+							class="hilite" id="siena_trouble_amr_unsolicited_event1">...</span>
+							be processed
+						</li>
+						<li>Outage events for unsolicited pings <span class="hilite"
+							id="siena_trouble_amr_unsolicited_event2">...</span> be processed
+						</li>
+					</ul></li>
+				<li>siena.trouble.amr.outage_response is <span class="hilite"
+					id="siena_trouble_amr_outage_response">...</span> -
+					ODEventNotification events sent from remote server
+					<ul>
+						<li>restoration events <span class="hilite"
+							id="siena_trouble_amr_outage_response1">...</span> be processed
+						</li>
+						<li>outage events <span class="hilite"
+							id="siena_trouble_amr_outage_response2">...</span> be processed
+						</li>
+					</ul>
+				</li>
+
+				<li>siena.trouble.amr.manual_response is <span class="hilite"
+					id="siena_trouble_amr_manual_response">value</span> - manual pings
+					are those sent from the map
+					<ul>
+						<li>restoration events for manual pings <span class="hilite"
+							id="siena_trouble_amr_manual_response1">will/not</span> be
+							processed
+						</li>
+						<li>outage events for manual pings <span class="hilite"
+							id="siena_trouble_amr_manual_response2">will/not</span> be
+							processed
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul>
+				<li>siena_amr.suspended_meters.load_from_cis = <span
+					class="hilite" id="siena_amr_cis_meter_client">...</span></li>
+			</ul>
+
+			<ul>
+				<li>Repinging outage events
+					<ul>
+						<li>When an outage event occurs, the system <span
+							class="hilite" id="siena_amr_reping_on_outage_count1">...</span>
+							re-ping to ensure the meter is out.
+							<ul>
+								<li>The system will re-ping the outage <span class="hilite"
+									id="siena_amr_reping_on_outage_count">number</span> times
+									before creating outage on map
+								</li>
+								<li>The delay between pings is <span class="hilite"
+									id="siena_amr_reping_delay">...</span> mins
+								</li>
+								<li>All pings must occur within a window of <span
+									id="siena_amr_reping_window" class="hilite">...</span> minutes
+									to be counted
+								</li>
+							</ul></li>
+					</ul>
+				</li>
+			</ul>
+			<ul>
+
+
+				<li>The system is <span class="hilite" id="resolve_calls">...</span>.
+					<ul>
+						<li>The job that execute siena_amr.meterPing.resolveAmiCalls
+							runs every <span class="hilite" id="resolve_calls_increment">...</span>
+						</li>
+						<li>AMI_restore reports will be cleared (trouble report
+							closed) after <span class="hilite" id="siena_amr_resolve_timeout">...</span>
+							minutes (siena_amr.resolve_timeout)
+						</li>
+						<li>AMI_outage reports will be cleared (trouble report
+							closed) after <span class="hilite" id="siena_amr_outage_timeout">...</span>
+							minutes (siena_amr.outage_timeout)
+						</li>
+					</ul>
+				</li>
+			</ul>
+
+			<ul>
+				<li>System automated pinging...
+					<ul>
+						<li>The system is <span class="hilite" id="meter_ping">...</span>.
+							<span id="meter_ping1">...</span>
+						</li>
+						<li>The system is pinging every <span class="hilite"
+							id="meter_ping_increment">...</span> minutes
+						</li>
+						<li>Pings are sent when <span class="hilite"
+							id="siena_amr_ping_action"> ...</span> (siena_amr.ping_action)
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul>
+				<li>Pinging from outage forms is <span class="hilite"
+					id="siena_amr_restore_ping_field">...</span></li>
+			</ul>
+			<ul>
+				<li>AMI <span class="hilite" id="siena_amr_resolve_on_restore">...</span><span
+					id="siena_amr_resolve_on_restore1"></span></li>
+			</ul>
+			<ul>
+				<li>PMU functionality is <span class="hilite"
+					id="siena_amr_pmu_enable">...</span>. It should be disabled as it
+					is deprecated.
+				</li>
+			</ul>
+			<ul>
+				<li>the caller type AMI <span class="hilite"
+					id="outage_analyze">...</span>
+					<ul>
+						<li>There <span class="hilite" id="resolve_pc">...</span> an
+							entry for outage, inferred in siena_web_services.problem_code,
+							with corresponding entry in trouble_type table. This <span
+							class="hilite" id="resolve_pc1">...</span></li>
+						<li>There <span class="hilite" id="outage_pc">...</span> an
+							entry for restoration in siena_web_services.problem_code, with
+							corresponding entry in trouble_type table. This <span
+							class="hilite" id="outage_pc1">...</span></li>
+						<li>Light codes are <span class="hilite" id="light_code_count">...</span></li>
+					</ul>
+				</li>
+			</ul>
+			<ul>
+				<li>Pinging of Feeders
+					<ul>
+						<li>The system <span class="hilite"> will/not </span> ping
+							feeders
+						</li>
+						<li>The system <span class="hilite"> will/not </span> ping
+							priority customers for a feeder
+						</li>
+						<li>priority trigger duration is <span class="hilite">set/not</span></li>
+						<li>priority trigger accoutn flag is <span class="hilite">value</span></li>
+					</ul>
+		</div>
+	</div>
+</body>
+<style>
+.hilite {
+	color: yellow;
+	font-weight: bold;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$.ajax({
+			type : 'GET',
+			url : '@routes.Amr.getNarrativeData()',
+			success : function(json) {
+				for ( var key in json) {
+					console.log(key + " -> " + json[key]);
+				}
+				setPmu(json);
+				setPath(json);
+				setVersion(json);
+				setIsDisabled(json);
+				setResponseUrl(json);
+				setUnsolicited(json);
+				setOutageResponse(json);
+				setManualResponse(json);
+				setDisableTagLevel(json);
+				setCisMeter(json);
+				setReping(json);
+				setTimeout(json);
+				setMeterPing(json);
+				setPingAction(json);
+				setPingForm(json);
+				setResolveOnRestore(json);
+				setPmu(json);
+				setResolveTimeout(json);
+				setOutageTimeout(json);
+				setResolveCalls(json);
+				setOutageAnalyze(json);
+				setResolveProblemCodes(json);
+				setOutageProblemCodes(json);
+				setLightCodeCount(json);
+			}
+		});
+	});
+
+	function setPath(json) {
+		key1 = "siena_amr_HTTP_Server";
+		key2 = "siena_amr_HTTP_Path"
+		if (json.hasOwnProperty(key1))
+			$("#" + key1).text(json[key1]);
+		else
+			$("#" + key1).text("(Server not set)");
+
+		if (json.hasOwnProperty(key2))
+			$("#" + key2).text(json[key2]);
+		else
+			$("#" + key2).text("(Path not set)");
+	}
+
+	function setPmu(json) {
+		var key = "siena_amr_pmu_enable"
+		var pmu = "DISABLED"
+		if (json.hasOwnProperty(key))
+			pmu = json[key] == "1" ? "ENABLED" : "DISABLED";
+		$("#" + key).text(pmu);
+	}
+
+	function setVersion(json) {
+		var key = "siena_amr_oa_version";
+		if (json.hasOwnProperty(key))
+			$("#" + key).text(json[key]);
+		else
+			$("#" + key).text("Not set, defaults to 3J");
+	}
+
+	function setIsDisabled(json) {
+		var key = "isDisabled";
+		if (json.hasOwnProperty(key)) {
+			var value = json[key]
+			$("#" + key).text((value == "true") ? "Disabled" : "Enabled");
+			$("#" + key + "1").text(
+					(value == "true") ? "ON THE MAP" : "Not on the map")
+		} else {
+			$("#" + key).text("UNABLE TO RETRIEVE VALUE (ERROR)");
+		}
+	}
+
+	function setDisableTagLevel(json) {
+		var key = "od_event_disable_tag_level";
+		var v = getJsonValue(json, key);
+		if (v.length > 0)
+			$("#" + key).text(v);
+		else
+			$("#" + key).text("Not Set");
+	}
+
+	function setResponseUrl(json) {
+		var key = "siena_amr_oa_response_url";
+		var v = getJsonValue(json, key);
+		var version = getJsonValue(json, "siena_amr_oa_version");
+		if (v.length > 0)
+			$("#" + key).text(v);
+		if (v.length == 0) {
+			if (version.toLowerCase == "30x")
+				$("#" + key).text("Not set. Please set it!!!");
+			else
+				$("#" + key).text("Not set. But that's okay.");
+		}
+	}
+
+	function setUnsolicited(json) {
+		var key = "siena_trouble_amr_unsolicited_event";
+		var v = getJsonValue(json, key)
+		if (v == "both") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL");
+		} else if (v == "restoration") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL NOT");
+		} else if (v == "outage") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL");
+		} else {
+			$("#" + key).text("NOT SET");
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL NOT");
+		}
+	}
+
+	function setOutageResponse(json) {
+		var key = "siena_trouble_amr_outage_response";
+		var v = getJsonValue(json, key)
+		if (v == "both") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL");
+		} else if (v == "restoration") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL NOT");
+		} else if (v == "outage") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL");
+		} else if (v == "off") {
+			$("#" + key).text("off");
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL NOT");
+		} else {
+			$("#" + key).text("NOT SET");
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL NOT");
+		}
+	}
+
+	function setManualResponse(json) {
+		var key = "siena_trouble_amr_manual_response";
+		var v = getJsonValue(json, key)
+		if (v == "both") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL");
+		} else if (v == "restoration") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL");
+			$("#" + key + "2").text("WILL NOT");
+		} else if (v == "outage") {
+			$("#" + key).text(v);
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL");
+		} else if (v == "off") {
+			$("#" + key).text("off");
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL NOT");
+		} else {
+			$("#" + key).text("NOT SET");
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key + "2").text("WILL NOT");
+		}
+	}
+
+	function setLightCodeCount(json) {
+		var key = "light_code_count";
+		var v = getJsonValue(json, key);
+		if (v == "") {
+			v = "[Error: no light codes set at all, no value returned]";
+
+		} else {
+			var count = parseInt(v);
+			if (count < 2)
+				v = "[Error: Please check that AMI_OFF and AMI_ON are in the lights table]";
+			else
+				v = "present [AMI_OFF, AMI_ON]"
+		}
+		$("#" + key).text(v);
+	}
+
+	function getDisableTag(json) {
+		var key = "od_event_disable_tag_level";
+		var v = getJsonValue(json, key);
+		if (v.length > 0)
+			$("#" + key).text(v);
+		else
+			$("#" + key).text("NOT SET (SET IT!)");
+	}
+
+	function setCisMeter(json) {
+		var key = "siena_amr_cis_meter_client";
+		var v = getJsonValue(json, key);
+		if (v.length > 0)
+			$("#" + key).text(v);
+		else
+			$("#" + key).text("NOT SET (will not ignore suspended accounts)");
+	}
+
+	function setReping(json) {
+		var key = "siena_amr_reping_on_outage_count"
+		var key2 = "siena_amr_reping_delay"
+		var key3 = "siena_amr_reping_window";
+		var v = getJsonValue(json, key);
+		if (v == "" || v == "0") {
+			$("#" + key + "1").text("WILL NOT");
+			$("#" + key).text("0");
+		} else {
+			$("#" + key + "1").text("WILL");
+			$("#" + key).text(v);
+		}
+
+		var v = getJsonValue(json, key2);
+		if (v == "")
+			v = "NOT SET";
+		$("#" + key2).text(v);
+
+		var v = getJsonValue(json, key3);
+		if (v == "")
+			v = "NOT SET";
+		$("#" + key3).text(v);
+	}
+
+	function setTimeout(json) {
+		var key1 = "siena_amr_resolve_timeout";
+		var key2 = "siena_amr_outage_timeout";
+
+		var v = getJsonValue(json, key1);
+		if (v == "")
+			v = "NOT SET";
+		$("#" + key1).text(v);
+
+		var v = getJsonValue(json, key2);
+		if (v == "")
+			v = "NOT SET";
+		$("#" + key2).text(v);
+
+	}
+
+	function setMeterPing(json) {
+		var key1 = "meter_ping";
+		var v = getJsonValue(json, key1);
+		var v2 = "";
+		if (v == "" || v != "true") {
+			v = "NOT PINGING";
+			v2 = "This is probably wrong and can be fixed by creating a dbms_job that runs every minute and calls siena_amr.meterPing.ping"
+		} else {
+			v = "PINGING";
+			v2 = "This is good."
+		}
+
+		$("#" + key1).text(v)
+		$("#" + key1 + "1").text(v2)
+
+		var key2 = "meter_ping_increment";
+		var v = getJsonValue(json, key2);
+		if (v == "" || v == "0")
+			v = "[ERROR: job exists, but is broken or set to run far in the future]";
+		$("#" + key2).text(v);
+	}
+
+	function setResolveCalls(json) {
+		var key = "resolve_calls";
+		var v = getJsonValue(json, key);
+		var v2 = "";
+		if (v == "" || v != "true") {
+			v = "NOT automatically resolving calls";
+			v2 = "It probably should and can be fixed by creating a dbms_job that runs every minute and calls siena_amr.meterPing.resolveAmiCalls"
+		} else {
+			v = "automatically resolving calls after a fixed time";
+			v2 = "This is good."
+		}
+
+		$("#" + key).text(v)
+		$("#" + key1 + "1").text(v2)
+
+		var key2 = "resolve_calls_increment";
+		var v = getJsonValue(json, key2);
+		if (v == "" || v == "0")
+			v = "[ERROR: job exists, but is broken or set to run far in the future]";
+		$("#" + key2).text(v);
+	}
+
+	function setPingAction(json) {
+		var key = "siena_amr_ping_action";
+		var v = getJsonValue(json, key);
+		if (v == "")
+			v = "NOT SET [ERROR, set this config var to partial, trouble_rpt, outage].";
+		else if (v == "none")
+			v = "NONE [ERROR, set this config var to partial, trouble_rpt, outage].";
+		else if (v.toLowerCase() == "partial")
+			v = "partial outages are resolved";
+		else if (v.toLowerCase() == "trouble_rpt")
+			v = "trouble reports are closed";
+		else if (v.toLowerCase() == "outage")
+			v = "outages are resolved";
+		else
+			v = "[ERROR; Unexpected value " + v + "]";
+		$("#" + key).text(v);
+	}
+
+	function setPingForm(json) {
+		var key = "siena_amr_restore_ping_field";
+		var v = getJsonValue(json, key);
+		if (v == "")
+			v = "Not setup. Pinging from outage form is disabled";
+		else
+			v = "Is set to a value of " + v;
+		$("#" + key).text(v);
+	}
+
+	function setResolveOnRestore(json) {
+		var key = "siena_amr_resolve_on_restore";
+		var v = getJsonValue(json, key);
+		var v2 = "";
+		if (v == "" || v == "0") {
+			v = "will not RESOLVE trouble reports."
+			v2 = "This prevents ami_restoration messages from closing a trouble report and changing the caller type from (eg) ivr to ami.";
+		} else if (v == "1") {
+			v = "will RESOLVE trouble reports.";
+			v2 = "When restoration messages are received, the system will resolve open troble reports and change the caller type to AMI (few clients like this).";
+		}
+		$("#" + key).text(v);
+		$("#" + key + "1").text(v2);
+	}
+
+	function setPmu(json) {
+		var key = "siena_amr_pmu_enable";
+		var v = getJsonValue(json, key);
+		if (v == "" || v == "0")
+			v = "turned OFF";
+		else if (v == "1")
+			v = "turned ON";
+		else
+			v = "[ERROR value " + v + "is not legal]";
+
+		$("#" + key).text("turned OFF");
+	}
+
+	function setOutageProblemCodes(json) {
+		var key = "outage_pc";
+		var v2 = ""
+
+		var v = getJsonValue(json, key);
+		if (v == "" || v == "0") {
+			v = "IS NOT";
+			v2 = "This is not good. No resolved (green meter) ami trouble reports will be created";
+		} else {
+			v = "IS";
+			v2 = "This is good.";
+		}
+		$("#" + key).text(v);
+		$("#" + key + "1").text(v2);
+	}
+	var key2 = "outage_pc";
+
+	function setResolveProblemCodes(json) {
+		var key = "resolve_pc";
+		var v2 = ""
+
+		var v = getJsonValue(json, key);
+		if (v == "" || v == "0") {
+			v = "IS NOT";
+			v2 = "This is not good. No outage (yellow/red meter) ami trouble reports will be created";
+		} else {
+			v = "IS";
+			v2 = "This is good.";
+		}
+		$("#" + key).text(v);
+		$("#" + key + "1").text(v2);
+	}
+
+	function setResolveTimeout(json) {
+		var key = "siena_amr_resolve_timeout";
+		var v = getJsonValue(json, key);
+		if (v == "")
+			v = "6 [Not set, default]";
+
+		$("#" + key).text(v);
+	}
+
+	function setOutageTimeout(json) {
+		var key = "siena_amr_outage_timeout";
+		var v = getJsonValue(json, key);
+		if (v == "")
+			v = "30 [Not set, default]";
+
+		$("#" + key).text(v);
+	}
+
+	function setOutageAnalyze(json) {
+		var key = "outage_analyze";
+		var v = getJsonValue(json, key);
+		if (v == "" || v == "0")
+			v = "will NOT cause creation of outage";
+		else
+			v = "will cause creation of outages";
+		$("#" + key).text(v);
+	}
+
+	function getJsonValue(json, property) {
+		if (json.hasOwnProperty(property))
+			return json[property];
+		else
+			return "";
+	}
+
+	function setId(json, propertyName) {
+		if (json.hasOwnProperty(propertyName)) {
+			$('#' + propertyname).value(json[propertyName]);
+		}
+	}
+</script>
+
+

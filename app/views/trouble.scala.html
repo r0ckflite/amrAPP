@@ -1,0 +1,12 @@
+@(form: Form[TroubleConfig]) @_main("Trouble Setup") @_nav()
+
+<body class="k-content col-md-3">
+	<div class="container">
+		<div class="starter-template">
+			<h2>Trouble Package Settings</h2>
+		</div>
+		<div>@helper.form(action = routes.Trouble.submit) {
+			@_troubleConfig(form) }</div>
+	</div>
+</body>
+</html>

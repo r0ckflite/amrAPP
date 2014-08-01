@@ -14,6 +14,7 @@ import global._
 import play.api.data._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
+import scala.concurrent.Future
 
 object Application extends Controller with Secured {
 
@@ -41,6 +42,30 @@ object Application extends Controller with Secured {
     Ok(html.login(loginForm))
   }
 
+  def getPage1Vars = IsAuthenticated { username =>
+    implicit request => {
+
+      val configItems = JDBC.withConnection(username) { implicit connection =>
+        models.SienaConfig.getConfigItems(connection, List(
+          "oa_od.client",
+          "oa_od.event.restore_event.enable",
+          "oa_od.event.outage_event.enable"))
+      }
+
+      val client = SienaConfig.getValue(configItems, "oa_od.client", "not set")
+      val restore = SienaConfig.getValue(configItems, "oa_od.event.restore_event.enable", "0")
+      val outage = SienaConfig.getValue(configItems, "oa_od.event.outage_event.enable", "0")
+
+      val json = Json.toJson(Map[String, String](
+        "client" -> client,
+        "restoreEvent" -> (if (restore.equals("0")) "NOT " else ""),
+        "outageEvent" -> (if (outage.equals("0")) "NOT " else "")))
+
+
+      Ok(json)
+    }
+  }
+
   /**
    * Handle login form submission.
    */
@@ -50,9 +75,14 @@ object Application extends Controller with Secured {
       user => Redirect(routes.Application.index).withSession("conn" -> user._1))
   }
 
-  def submit = IsAuthenticated { username => implicit request =>
-    println("the form has been submitted!")
-    val config = AmrConfig.amrConfigForm.bindFromRequest.fold(
+  def test = Action { implicit request =>
+    Ok(html.test1())
+  }
+
+  def submit = IsAuthenticated { username =>
+    implicit request =>
+      println("the form has been submitted!")
+      val config = AmrConfig.amrConfigForm1.bindFromRequest.fold(
         formWithErrors => {
           // binding failure, retrieved form with errors:
           println("form get failed!, form is : " + formWithErrors.errors)
@@ -61,12 +91,11 @@ object Application extends Controller with Secured {
         }, formData => {
           // save form data back to db!
           JDBC.withConnection(username) { implicit connection =>
-            AmrConfig.saveForm(connection, formData)
+            AmrConfig.saveForm(connection, formData, null)
           }
           Redirect(routes.Application.index())
-        }
-    )
-    Redirect(routes.Application.index())
+        })
+      Redirect(routes.Application.index())
   }
 
   /**
@@ -81,10 +110,26 @@ object Application extends Controller with Secured {
     implicit request => {
       println("username = " + username)
 
-      // load all config items from db, might want to filterr this query
       val configItems = JDBC.withConnection(username) { implicit connection =>
-        models.SienaConfig.configs2(connection)
+        models.SienaConfig.getConfigItems(connection, List("siena_amr.oa_version",
+          "siena.trouble.amr.unsolicited_event",
+          "siena.trouble.amr.outage_response",
+          "siena.trouble.amr.manual_response",
+          "siena_amr.reping_on_outage_count",
+          "siena_amr.reping_window",
+          "siena_amr.reping_delay",
+          "siena_amr.validate_dups",
+          "siena_amr.validate_event_date",
+          "siena_amr.disable.tag_level",
+          "siena_amr.suspended_meters.load_from_cis",
+          "siena_amr.outage_event.enable",
+          "siena_amr.restore_event.enable"))
       }
+      
+
+      
+      
+      println("***** DEBUG : retrieved " + configItems.size + " config items")
 
       Ok(views.html.index(AmrConfig.loadForm(configItems), AmrConfig.formElements))
     }
@@ -111,4 +156,5 @@ trait Secured {
     Security.Authenticated(username, onUnauthorized) { user =>
       Action(request => f(user)(request))
     }
+
 }

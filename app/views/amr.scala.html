@@ -1,0 +1,20 @@
+@(form: Form[AmrConfig1]) @_main("Trouble Setup") @_nav()
+
+
+<body class="k-content col-md-3">
+	<div class="container">
+		<div class="starter-template">
+			<h2>AMR Settings</h2>
+		</div>
+		<div class="row">
+		    @helper.form(action = routes.Amr.submit) {
+			@_amrConfig(form) }
+		</div>
+		<hr>
+		<h2>Event Data</h2>
+		<div class="row">
+			@_dataStrip()
+		</div>
+	</div>
+</body>
+</html>

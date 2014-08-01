@@ -1,48 +1,147 @@
-2014-07-17 16:58:51,677 - [INFO] - from play in pool-128-thread-1 
+2014-08-01 11:02:55,823 - [INFO] - from play in pool-23-thread-3 
 Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-2014-07-17 16:58:56,927 - [INFO] - from play in play-internal-execution-context-1 
+2014-08-01 11:02:58,525 - [INFO] - from play in play-internal-execution-context-1 
 Application started (Dev)
 
-2014-07-17 16:58:57,322 - [DEBUG] - from com.jolbox.bonecp.BoneCPDataSource in play-akka.actor.default-dispatcher-3 
+2014-08-01 11:02:58,944 - [DEBUG] - from com.jolbox.bonecp.BoneCPDataSource in play-akka.actor.default-dispatcher-3 
 JDBC URL = jdbc:oracle:thin:@localhost:1521:siena, Username = siena_web_services, partitions = 1, max (per partition) = 30, min (per partition) = 5, idle max age = 10 min, idle test period = 1 min, strategy = DEFAULT
 
-2014-07-17 16:59:00,326 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-3 
-select item, default_value, value, description, multiples_allowed from siena.siena_config
+2014-08-01 11:03:03,242 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-3 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.oa_version','siena.trouble.amr.unsolicited_event','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.disable.tag_level','siena_amr.suspended_meters.load_from_cis','siena_amr.outage_event.enable','siena_amr.restore_event.enable')
 
-2014-07-17 16:59:12,679 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.oa_version', '30x')}
+2014-08-01 11:03:03,916 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.suspended_meters.load_from_cis','siena_amr.event.restore_event.enable','siena_amr.event.outage_event.enable','siena_amr.event_duplicate.timeout','siena_amr.pmu.enable','siena_amr.resolve_on_restore','siena_amr.cis.meter.client','siena_amr.ping_action','siena_amr.resolve_timeout','siena_amr.outage_timeout','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena.trouble.amr.unsolicited_event','siena_amr.restore_ping_field','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.processType.test_mode','siena_amr.HTTP.Server','siena_amr.HTTP.Path','siena_amr.oa_version','siena_amr.oa_response_url','od_event.disable.tag_level')
 
-2014-07-17 16:59:12,740 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena.trouble.amr.unsolicited_event', '')}
+2014-08-01 11:03:04,066 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+begin ? := sys.diutil.bool_to_int(siena_web_services.od_tools.isODEventDisabled()); end;
 
-2014-07-17 16:59:12,776 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena.troube.amr.outage_response', '')}
+2014-08-01 11:03:04,132 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.ping%'
 
-2014-07-17 16:59:12,819 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena.trouble.amr.manual_response', '')}
+2014-08-01 11:03:04,195 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.resolveamicalls%'
 
-2014-07-17 16:59:12,857 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.reping_on_outage_count', '')}
+2014-08-01 11:03:04,254 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
 
-2014-07-17 16:59:12,893 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.reping_delay', '')}
+2014-08-01 11:03:04,309 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
 
-2014-07-17 16:59:12,931 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.validate_dups', '')}
+2014-08-01 11:03:04,368 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select count(*) the_count
+    		from trouble_type_code
+    		where code in
+    			(select trouble_type_code 
+    			from siena_web_services.problem_code
+    			where lower(event_type) in ('outage', 'inferred'))
+    		and lower(do_not_analyze) = 'X'
 
-2014-07-17 16:59:12,966 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.validate_event_date', '')}
+2014-08-01 11:03:04,437 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-8 
+select count(*) from astorm2.lights where lights in ('AMI_ON', 'AMI_OFF')
 
-2014-07-17 16:59:13,003 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.suspended_meters.load_from_cis', '')}
+2014-08-01 11:04:17,722 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-10 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.oa_version','siena.trouble.amr.unsolicited_event','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.disable.tag_level','siena_amr.suspended_meters.load_from_cis','siena_amr.outage_event.enable','siena_amr.restore_event.enable')
 
-2014-07-17 16:59:13,039 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.outage_event.enable', '')}
+2014-08-01 11:04:24,493 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.suspended_meters.load_from_cis','siena_amr.event.restore_event.enable','siena_amr.event.outage_event.enable','siena_amr.event_duplicate.timeout','siena_amr.pmu.enable','siena_amr.resolve_on_restore','siena_amr.cis.meter.client','siena_amr.ping_action','siena_amr.resolve_timeout','siena_amr.outage_timeout','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena.trouble.amr.unsolicited_event','siena_amr.restore_ping_field','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.processType.test_mode','siena_amr.HTTP.Server','siena_amr.HTTP.Path','siena_amr.oa_version','siena_amr.oa_response_url','od_event.disable.tag_level')
 
-2014-07-17 16:59:13,075 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-6 
-{call updateConfig('siena_amr.restore_event.enable', '')}
+2014-08-01 11:04:24,625 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+begin ? := sys.diutil.bool_to_int(siena_web_services.od_tools.isODEventDisabled()); end;
 
-2014-07-17 16:59:13,120 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-9 
-select item, default_value, value, description, multiples_allowed from siena.siena_config
+2014-08-01 11:04:24,688 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.ping%'
+
+2014-08-01 11:04:24,746 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.resolveamicalls%'
+
+2014-08-01 11:04:24,802 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:04:24,873 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:04:24,929 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select count(*) the_count
+    		from trouble_type_code
+    		where code in
+    			(select trouble_type_code 
+    			from siena_web_services.problem_code
+    			where lower(event_type) in ('outage', 'inferred'))
+    		and lower(do_not_analyze) = 'X'
+
+2014-08-01 11:04:25,003 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-13 
+select count(*) from astorm2.lights where lights in ('AMI_ON', 'AMI_OFF')
+
+2014-08-01 11:04:44,854 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-12 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.oa_version','siena.trouble.amr.unsolicited_event','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.disable.tag_level','siena_amr.suspended_meters.load_from_cis','siena_amr.outage_event.enable','siena_amr.restore_event.enable')
+
+2014-08-01 11:04:45,641 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.suspended_meters.load_from_cis','siena_amr.event.restore_event.enable','siena_amr.event.outage_event.enable','siena_amr.event_duplicate.timeout','siena_amr.pmu.enable','siena_amr.resolve_on_restore','siena_amr.cis.meter.client','siena_amr.ping_action','siena_amr.resolve_timeout','siena_amr.outage_timeout','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena.trouble.amr.unsolicited_event','siena_amr.restore_ping_field','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.processType.test_mode','siena_amr.HTTP.Server','siena_amr.HTTP.Path','siena_amr.oa_version','siena_amr.oa_response_url','od_event.disable.tag_level')
+
+2014-08-01 11:04:45,768 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+begin ? := sys.diutil.bool_to_int(siena_web_services.od_tools.isODEventDisabled()); end;
+
+2014-08-01 11:04:45,830 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.ping%'
+
+2014-08-01 11:04:45,890 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.resolveamicalls%'
+
+2014-08-01 11:04:45,949 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:04:46,005 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:04:46,062 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select count(*) the_count
+    		from trouble_type_code
+    		where code in
+    			(select trouble_type_code 
+    			from siena_web_services.problem_code
+    			where lower(event_type) in ('outage', 'inferred'))
+    		and lower(do_not_analyze) = 'X'
+
+2014-08-01 11:04:46,138 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-18 
+select count(*) from astorm2.lights where lights in ('AMI_ON', 'AMI_OFF')
+
+2014-08-01 11:06:00,607 - [INFO] - from play in play-internal-execution-context-1 
+Application started (Dev)
+
+2014-08-01 11:06:00,661 - [DEBUG] - from com.jolbox.bonecp.BoneCPDataSource in play-akka.actor.default-dispatcher-21 
+JDBC URL = jdbc:oracle:thin:@localhost:1521:siena, Username = siena_web_services, partitions = 1, max (per partition) = 30, min (per partition) = 5, idle max age = 10 min, idle test period = 1 min, strategy = DEFAULT
+
+2014-08-01 11:06:04,778 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-21 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.oa_version','siena.trouble.amr.unsolicited_event','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.disable.tag_level','siena_amr.suspended_meters.load_from_cis','siena_amr.outage_event.enable','siena_amr.restore_event.enable')
+
+2014-08-01 11:06:05,508 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ('siena_amr.suspended_meters.load_from_cis','siena_amr.event.restore_event.enable','siena_amr.event.outage_event.enable','siena_amr.event_duplicate.timeout','siena_amr.pmu.enable','siena_amr.resolve_on_restore','siena_amr.cis.meter.client','siena_amr.ping_action','siena_amr.resolve_timeout','siena_amr.outage_timeout','siena.trouble.amr.outage_response','siena.trouble.amr.manual_response','siena.trouble.amr.unsolicited_event','siena_amr.restore_ping_field','siena_amr.reping_on_outage_count','siena_amr.reping_window','siena_amr.reping_delay','siena_amr.processType.test_mode','siena_amr.HTTP.Server','siena_amr.HTTP.Path','siena_amr.oa_version','siena_amr.oa_response_url','od_event.disable.tag_level')
+
+2014-08-01 11:06:05,637 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+begin ? := sys.diutil.bool_to_int(siena_web_services.od_tools.isODEventDisabled()); end;
+
+2014-08-01 11:06:05,707 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.ping%'
+
+2014-08-01 11:06:05,767 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%meterping.resolveamicalls%'
+
+2014-08-01 11:06:05,825 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:06:05,890 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select count(*) from siena_web_services.problem_code where lower(event_type) in ('outage', 'inferred')
+
+2014-08-01 11:06:05,949 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select count(*) the_count
+    		from trouble_type_code
+    		where code in
+    			(select trouble_type_code 
+    			from siena_web_services.problem_code
+    			where lower(event_type) in ('outage', 'inferred'))
+    		and lower(do_not_analyze) = 'X'
+
+2014-08-01 11:06:06,018 - [DEBUG] - from com.jolbox.bonecp.PreparedStatementHandle in play-akka.actor.default-dispatcher-27 
+select count(*) from astorm2.lights where lights in ('AMI_ON', 'AMI_OFF')
 

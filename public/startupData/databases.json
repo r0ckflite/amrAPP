@@ -1,4 +1,5 @@
 [
 {"name": "localhost", "value":"localhost", "url":"jdbc:oracle:thin:@localhost:1521:test","user":"siena_web_services"},
-{"name": "ventyx", "value":"ventyx", "url":"jdbc:oracle:thin:@siena-db-prod:1530:nvqdms", "user":"siena_web_services"}
+{"name": "ventyx", "value":"ventyx", "url":"jdbc:oracle:thin:@siena-db-prod:1530:nvqdms", "user":"siena_web_services"},
+{"name": "lec", "value":"lec", "url":"jdbc:oracle:thin:@lec-db-dev:1521:test","user":"siena_web_services"}
 ]

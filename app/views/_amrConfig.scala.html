@@ -1,101 +1,250 @@
-@(form: Form[AmrConfig])
+@(form: Form[AmrConfig1])
 
-<h4>OA Version</h4>
-<span><input id="oaVersionHolder" place="Select OA Version" title="Version of Multispeak being used"/></span>
-<h4>Unsolicited Events</h4>
-<span><input id="unsolicitedEventsHolder" place="---" /></span>
-<h4>Outage Response</h4>
-<span><input id="outageResponseHolder" place="---" /></span>
-<h4>Manual Response</h4>
-<span><input id="manualResponseHolder" place="---" /></span>
-<h4>Validate Dups?</h4>
-<span><input id="validateDupsHolder" place="---" /></span>
-<h4>Validate Evenet Date?</h4>
-<span><input id="validateEventDateHolder" place="---" /></span>
-<h4>Disable Tag Level</h4>
-<span><input id="disableTagLevelHolder" place="---" /></span>
-<h4>Suspended Load CIS?</h4>
-<span><input id="suspendedLoadCISHolder" place="---" /></span>
-<h4>Outage Event Enable?</h4>
-<span><input id="outageEventEnableHolder" place="---" /></span>
-<h4>Restore Event Enable?</h4>
-<span><input id="restoreEventEnableHolder" place="---" /></span>
-<h4>Reping On Outage</h4>
-<span><input id="repingOnOutageHolder" place="---"/></span>
-<h4>Reping Delay</h4>
-<span><input id="repingDelayHolder" place="---" value=""/></span>
-<h4>Reping Window</h4>
-<span><input id="repingWindowHolder" place="---" value=""/></span>
-<button class="k-button" type="submit">Submit</button>
+<div class="row">
+	<div class="col-md-4">
+		<h4>OA Version</h4>
+		<span><input id="oaVersionHolder" place="Select OA Version"
+			title="Version of Multispeak being used" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Unsolicited Events</h4>
+		<span><input id="unsolicitedEventsHolder" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Outage Response</h4>
+		<span><input id="outageResponseHolder" place="---" /></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Manual Response</h4>
+		<span><input id="manualResponseHolder" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Disable Tag Level</h4>
+		<span><input id="disableTagLevelHolder" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Suspended Load CIS?</h4>
+		<span><input id="suspendedLoadCISHolder" place="---" /></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Outage Event Enable?</h4>
+		<span><input id="outageEventEnableHolder" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Restore Event Enable?</h4>
+		<span><input id="restoreEventEnableHolder" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Reping On Outage</h4>
+		<span><input id="repingOnOutageHolder" place="---" /></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Reping Delay</h4>
+		<span><input id="repingDelayHolder" place="---" value="" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Reping Window</h4>
+		<span><input id="repingWindowHolder" place="---" value="" /></span>
+	</div>
+	<div class="col-md-4">
+		<button class="k-button" type="submit" id="submitButton">Submit</button>
+	</div>
+</div>
+
 
 <style>
 .note-button {
-  margin-left: 5px;
-  }
+	margin-left: 5px;
+}
+
+.popover-content {
+	color: black;
+}
+
+#submitButton {
+	margin-top: 35px;
+}
 </style>
 
 <!--  Scripts to build input devices -->
 <script>
-function createDropDown(id, source, value) {
-	var combo = $('#' + id + "Holder");
-	combo.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
+	function createDropDown(id, source, value, help) {
+		var combo = $('#' + id + "Holder");
+		var helper = id + "Help"
+		combo
+				.parent()
+				.append(
+						'<a class="k-button note-button" id="' + helper +'"><span class="k-icon k-i-note"></span></a');
+		$("#" + helper).popover({
+			placement : top,
+			title : id,
+			html : true,
+			content : "<p>" + help + "</p>"
+		});
 
-	combo.kendoDropDownList({
-        dataTextField: "text",
-        dataValueField: "value",
-        dataSource: source,
-        filter: "contains",
-        suggest: true,
-        index: 3,
-        value: value,
-        change: function(e) {
-        	$("#" + id).val(this.value())
-        }
-    });
-	
-	// place values here on change for form submittal
-	combo.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
-}
+		combo.kendoDropDownList({
+			dataTextField : "text",
+			dataValueField : "value",
+			dataSource : source,
+			filter : "contains",
+			suggest : true,
+			index : 3,
+			value : value,
+			change : function(e) {
+				$("#" + id).val(this.value())
+			}
+		});
 
-function createNumericTextField(id, min, max, format, val) {
-	var text = $("#" + id + "Holder")
-	text.parent().append('<a class="k-button note-button"><span class="k-icon k-i-note"></span></a>');
+		// place values here on change for form submittal
+		combo
+				.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
 
-    text.kendoNumericTextBox({
-        min: min,
-        max: max,
-        step: 1,
-        value: val,
-        format: format
-    });
-    
-	text.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
-}
+	}
 
-function convertBoolean(value) {
-	if( value == "0") return "false"
-	else if( value == "1" ) return "true"
-	else return "---"
-}
+	function createNumericTextField(id, min, max, format, val, help) {
+		var text = $("#" + id + "Holder")
+		var helper = id + "Help"
+		text
+				.parent()
+				.append(
+						'<a class="k-button note-button" id="' + id + 'Help"><span class="k-icon k-i-note"></span></a');
 
-$(function () {
-    tf = [{text: "---", value: ""},{text: "True",value: "true"}, {text: "False",value: "false"}];
-    rob = [{text: "---", value: ""},{text: "Outage",value: "outage"}, {text: "Restore",value: "restore"}, {text: "Both",value: "both"}, {text: "Off",value: "off"}];
-    version = [{text: "---", value: ""},{text: "OA_OD3J",value: "30j"}, {text: "OA_OD3X",value: "30x"}, {text: "OA_OD41",value: "4"}];
-    
-    createDropDown("oaVersion", version, '@form("oaVersion").value');
-    createDropDown("unsolicitedEvents", rob, '@form("unsolicitedEvents").value');
-    createDropDown("outageResponse", rob, '@form("outageResponse").value');
-    createDropDown("manualResponse", rob, '@form("manualResponse").value');
-    createDropDown("validateDups", tf, convertBoolean('@form("validateDups").value'));
-    createDropDown("validateEventDate", tf, convertBoolean('@form("validateEventDate").value'));
-    createDropDown("suspendedLoadCIS", tf, convertBoolean('@form("suspendedLoadCIS").value'));
-    createDropDown("outageEventEnable", tf, convertBoolean('@form("outageEventEnable").value'));
-    createDropDown("restoreEventEnable", tf, convertBoolean('@form("restoreEventEnable").value'));
-    createNumericTextField("disableTagLevel", 0, 21, "##", '@form("disableTagLevel").value');
-    createNumericTextField("repingOnOutage", 0, 10, "## times", '@form("repingOnOutage").value');
-    createNumericTextField("repingDelay", 0, 60, "## mins", '@form("repingDelay").value');
-    createNumericTextField("repingWindow", 0, 60, "## mins", '@form("repingWindow").value');
-});
+		$("#" + helper).popover({
+			placement : top,
+			title : id,
+			html : true,
+			content : "<p>" + help + "</p>"
+		});
+		text.kendoNumericTextBox({
+			min : min,
+			max : max,
+			step : 1,
+			value : val,
+			format : format
+		});
+
+		text
+				.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
+	}
+
+	function convertBoolean(value) {
+		if (value == "0")
+			return "false"
+		else if (value == "1")
+			return "true"
+		else
+			return "---"
+	}
+
+	$(function() {
+		tf = [ {
+			text : "---",
+			value : ""
+		}, {
+			text : "True",
+			value : "true"
+		}, {
+			text : "False",
+			value : "false"
+		} ];
+		rob = [ {
+			text : "---",
+			value : ""
+		}, {
+			text : "Outage",
+			value : "outage"
+		}, {
+			text : "Restore",
+			value : "restore"
+		}, {
+			text : "Both",
+			value : "both"
+		}, {
+			text : "Off",
+			value : "off"
+		} ];
+		version = [ {
+			text : "---",
+			value : ""
+		}, {
+			text : "OA_OD3J",
+			value : "30j"
+		}, {
+			text : "OA_OD3X",
+			value : "30x"
+		}, {
+			text : "OA_OD41",
+			value : "4"
+		} ];
+
+		createDropDown(
+				"oaVersion",
+				version,
+				'@form("oaVersion").value',
+				'Determins the version of ODEventNotification used when the system executes pings on meters');
+		createDropDown(
+				"unsolicitedEvents",
+				rob,
+				'@form("unsolicitedEvents").value',
+				'Determines whether system will ignore unsolicted pings [Pings that were not requested] or process them: none, outage, restore');
+		createDropDown(
+				"outageResponse",
+				rob,
+				'@form("outageResponse").value',
+				'When system receives ping, it will process it for (both), or will only process outages (outage) or restoration (restore)');
+		createDropDown(
+				"manualResponse",
+				rob,
+				'@form("manualResponse").value',
+				'When a manual ping is done from the map, it will be ignored (none), or only certain types of responses (outage or restoration) will be processed');
+		createDropDown(
+				"suspendedLoadCIS",
+				tf,
+				convertBoolean('@form("suspendedLoadCIS").value'),
+				'Set to on to instruct system to check for suspended customers. Will not ping them.');
+		createDropDown(
+				"outageEventEnable",
+				tf,
+				convertBoolean('@form("outageEventEnable").value'),
+				'When set to false, amr outage events will not be processed. No AMI_OFF trouble reports will be created.');
+		createDropDown(
+				"restoreEventEnable",
+				tf,
+				convertBoolean('@form("restoreEventEnable").value'),
+				'When set to false, amr restore events will not be processed. No AMI_ON trouble reports will be created.');
+		createNumericTextField(
+				"disableTagLevel",
+				0,
+				21,
+				"##",
+				'@form("disableTagLevel").value',
+				'tagl level number. When tag is on the map, anywhere, amr is disabled. Used for storms.');
+		createNumericTextField(
+				"repingOnOutage",
+				0,
+				10,
+				"## times",
+				'@form("repingOnOutage").value',
+				'When this number is non-zero, the system will re-ping any outage events it recieves #n times, to verify outage result');
+		createNumericTextField(
+				"repingDelay",
+				0,
+				60,
+				"## mins",
+				'@form("repingDelay").value',
+				'When repingOnOutage is set (>0), this variable determines how long the system will pause before re-pinging');
+		createNumericTextField(
+				"repingWindow",
+				0,
+				60,
+				"## mins",
+				'@form("repingWindow").value',
+				'When the system re-pings and outage, the response from the remote system must be received in #n minutes or it is discarded.');
+	});
 </script>
-

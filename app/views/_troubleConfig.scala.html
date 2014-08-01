@@ -1,0 +1,152 @@
+@(form: Form[TroubleConfig])
+<style>
+.note-button {
+	margin-left: 5px;
+}
+
+.note-info {
+	font-size: small;
+}
+
+.section-title {
+	text-align: center
+}
+
+.flabel {
+	font-size: 18px;
+	font-weight: 500;
+}
+
+.row {
+	margin-top: 2px;
+}
+
+.problemCodeButton {
+	float: right;
+	width: 110px;
+}
+
+.problemCodeText {
+	float: right;
+}
+
+.popover-content {
+	color: black;
+}
+
+//
+initial setting is to hide the events
+#eventGridWrapper {
+	display: none;
+}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<dl class="error" id="callerType_field">
+				<h4>Caller Type</h4>
+				<input type="text" name="callerType"
+					value='@form("callerType").value' class="k-textbox" id="callerType" />
+			</dl>
+			<button class="k-button sbutton" type="submit">Submit</button>
+			<a href="#" class="k-button" data-toggle="popover"
+				id="callerTypeInfoButton"><span class="k-icon k-i-note"></span></a>
+		</div>
+		<div class="col-md-9">
+			<div id="callerTypeGrid"></div>
+		</div>
+	</div>
+	<hr>
+	<h2>Event Data</h2>
+		<div class="row">
+			@_dataStrip()
+		</div>
+	<div class="row" id="eventGridWrapper">
+		<div class="col-md-12" id="eventGridxx""></div>
+	</div>
+</div>
+
+<!-- script components -->
+<script>
+	$(document)
+			.ready(
+					function() {
+
+						$(document)
+								.ready(
+										function() {
+											$("#callerTypeInfoButton")
+													.popover(
+															{
+																placement : top,
+																title : "Caller Types",
+																html : true,
+																content : "<p>The caller-type entered here will be added to the astorm2.caller_type table"
+																		+ "if it does not already exist. This is required for propper creation of trouble reports</p>"
+															});
+										});
+
+						var callerTypeDataSource = new kendo.data.DataSource({
+							transport : {
+								read : function(options) {
+									$.ajax({
+										url : "trouble/getCallerType",
+										type : "GET",
+										dataType : "json",
+										success : function(result) {
+											$("#report_pre").html(
+													JSON.stringify(result));
+											options.success(result);
+										}
+									});
+								}
+							}
+						});
+
+						$("#callerTypeGrid").kendoGrid({
+							groupable : false,
+							//sortable: true,
+							scrollable : true,
+							//pageable: true,
+							dataSource : callerTypeDataSource,
+							// pageable: {
+							//     refresh: true,
+							//     pageSizes: true
+							// },
+							columns : [ {
+								title : "caller_type_id",
+								field : "callerTypeId",
+								width : "125"
+							}, {
+								title : "caller_type",
+								field : "callerType",
+								width : "125"
+							} ]
+						});
+
+						var onTabStripActivate = function(e) {
+							if ($(e.contentElement).find("#eventGrid").attr(
+									"id") == "eventGrid")
+								createEventTypeGrid();
+							if ($(e.contentElement).find("#problemCodeGrid")
+									.attr("id") == "problemCodeGrid")
+								createProblemCodeGrid();
+							else if ($(e.contentElement).find(
+									"#troubleTypeGrid").attr("id") == "troubleTypeGrid")
+								createTroubleTypeGrid();
+							tabStrip.unbind("active", onTabStripActivate);
+						}
+
+						var tabStrip = $("#tabstrip").kendoTabStrip({
+							animation : {
+								open : {
+									effects : "fadeIn"
+								}
+							},
+							activate : onTabStripActivate
+						});
+
+						createProblemCodeGrid();
+					});
+</script>

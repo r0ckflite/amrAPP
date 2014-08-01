@@ -1,0 +1,63 @@
+@()
+<div id="troubleTypeGrid"></div>
+
+<script>
+	function createTroubleTypeGrid() {
+		var eventDataSource = new kendo.data.DataSource({
+			transport : {
+				read : {
+					url : "trouble/getTroubleTypes",
+					dataType : "json"
+				}
+			},
+			batch : true,
+			pageSize : 20,
+			scrollable : true
+		});
+
+		$("#troubleTypeGrid").kendoGrid({
+			groupable : false,
+			scrollable : true,
+			dataSource : eventDataSource,
+			navigatable : true,
+			pageable : true,
+			columns : [ {
+				title : "code",
+				field : "code",
+				width : "125px"
+			}, {
+				title : "light",
+				field : "light",
+				width : "125px"
+			}, {
+				title : "wire",
+				field : "wire",
+				width : "250px"
+			}, {
+				title : "transformer",
+				field : "transformer",
+				width : "125px"
+			}, {
+				title : "pole",
+				field : "pole",
+				width : "125px"
+			}, {
+				title : "tree",
+				field : "tree",
+				width : "250px"
+			}, {
+				title : "extent",
+				field : "extent",
+				width : "125px"
+			}, {
+				title : "doNotAnalyze",
+				field : "doNotAnalyze",
+				width : "125px"
+			}, {
+				title : "momentaryOutage",
+				field : "momentaryOutage",
+				width : "125px"
+			} ]
+		});
+	}
+</script>

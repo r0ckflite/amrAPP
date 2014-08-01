@@ -1,0 +1,45 @@
+
+<div class="col-md-12">
+	<div id="example">
+		<div id="tabstrip" style="height: 400px;">
+			<ul>
+				<li class="k-state-active">Problem Codes</li>
+				<li>Events</li>
+				<li>Trouble Types</li>
+			</ul>
+			<div class="dataGrid">@_problemCode()</div>
+			<div class="dataGrid">@_events()</div>
+			<div class="dataGrid">@_troubleType()</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$(document)
+			.ready(
+					function() {
+						var onTabStripActivate = function(e) {
+							if ($(e.contentElement).find("#eventGrid").attr(
+									"id") == "eventGrid")
+								createEventTypeGrid();
+							if ($(e.contentElement).find("#problemCodeGrid")
+									.attr("id") == "problemCodeGrid")
+								createProblemCodeGrid();
+							else if ($(e.contentElement).find(
+									"#troubleTypeGrid").attr("id") == "troubleTypeGrid")
+								createTroubleTypeGrid();
+							tabStrip.unbind("active", onTabStripActivate);
+						}
+
+						var tabStrip = $("#tabstrip").kendoTabStrip({
+							animation : {
+								open : {
+									effects : "fadeIn"
+								}
+							},
+							activate : onTabStripActivate
+						});
+						createProblemCodeGrid();
+					});
+</script>

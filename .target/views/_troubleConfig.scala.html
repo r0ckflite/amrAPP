@@ -1,0 +1,13 @@
+@(form: Form[TroubleConfig])
+
+<span>@helper.inputText(form("callerType"), 'id -> "callerType", 'class -> "k-textbox", '_label -> "Caller Type")</span>
+<button class="k-button" type="submit">Submit</button>
+<h4>@form("callerType").value</h4>
+<span><input type="text" value="@form("callerType").value" class="k-textbox"></span>
+
+<style>
+.note-button {
+  margin-left: 5px;
+  }
+</style>
+

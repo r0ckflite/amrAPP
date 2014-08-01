@@ -1,0 +1,255 @@
+@()
+<style>
+#filterPC {
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
+
+#filterBox {
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.popover-title {
+	color: black;
+}
+</style>
+<div class="row">
+	<div id="eventGrid"></div>
+	<div id=filterBox>
+		<span id="filterPC">Filter by Problem Code</span><input type="checkbox" name="filterByProblemCode" value="filterByPC">
+		<a href="#" class="k-button" data-toggle="popover" id="filterEventsInfoButton"><span class="k-icon k-i-note"></span></a>
+	</div>
+</div>
+	
+
+<script>
+$(document).ready(function() {
+	$("#filterEventsInfoButton").popover({
+		placement: top,
+		title: "Event Filtering",
+		html:true,
+		content: "<p>To filter by problem code, go to the problem code tab, select a row, and then press the refresh button on this report.</p>"
+	});
+});
+
+	function createEventTypeGrid() {
+		var eventDataSource = new kendo.data.DataSource({
+			transport : {
+				read : {
+					url : "trouble/getEvents",
+					dataType : "json"
+				}
+			},
+			batch : true,
+			pageSize : 5,
+			scrollable : true
+		});
+
+		$("#eventGrid").kendoGrid({
+			groupable : false,
+			scrollable : true,
+			dataSource : eventDataSource,
+			navigatable : true,
+			pageable: {
+				pageSize: 8,
+				refresh: true
+			},
+			columns : [ {
+				title : "event_notification_id",
+				field : "event_notification_id",
+				width : "125px"
+			}, {
+				title : "phasecd",
+				field : "phasecd",
+				width : "125px"
+			}, {
+				title : "eventtime",
+				field : "eventtime",
+				width : "250px"
+			}, {
+				title : "eventtype",
+				field : "eventtype",
+				width : "125px"
+			}, {
+				title : "outagedevicetype",
+				field : "outagedevicetype",
+				width : "125px"
+			}, {
+				title : "create_date",
+				field : "create_date",
+				width : "250px"
+			}, {
+				title : "meter_no",
+				field : "meter_no",
+				width : "125px"
+			}, {
+				title : "serial_number",
+				field : "serial_number",
+				width : "125px"
+			}, {
+				title : "manufacturer",
+				field : "manufacturer",
+				width : "125px"
+			}, {
+				title : "serv_loc",
+				field : "serv_loc",
+				width : "125px"
+			}, {
+				title : "account_number",
+				field : "account_number",
+				width : "125px"
+			}, {
+				title : "area_code",
+				field : "area_code",
+				width : "125px"
+			}, {
+				title : "contact_first_name",
+				field : "contact_first_name",
+				width : "125px"
+			}, {
+				title : "contact_last_name",
+				field : "contact_last_name",
+				width : "125px"
+			}, {
+				title : "contact_middle_name",
+				field : "contact_middle_name",
+				width : "125px"
+			}, {
+				title : "contact_callback_phone",
+				field : "contact_callback_phone",
+				width : "125px"
+			}, {
+				title : "call_record_id",
+				field : "call_record_id",
+				width : "125px"
+			}, {
+				title : "customer_id",
+				field : "customer_id",
+				width : "125px"
+			}, {
+				title : "outage_event_id",
+				field : "outage_event_id",
+				width : "125px"
+			}, {
+				title : "completed_time",
+				field : "completed_time",
+				width : "250px"
+			}, {
+				title : "callback_status",
+				field : "callback_status",
+				width : "125px"
+			}, {
+				title : "callback_type",
+				field : "callback_type",
+				width : "125px"
+			}, {
+				title : "customer_time_to_call_start",
+				field : "customer_time_to_call_start",
+				width : "250px"
+			}, {
+				title : "customer_time_call_end",
+				field : "customer_time_call_end",
+				width : "250px"
+			}, {
+				title : "priority",
+				field : "priority",
+				width : "125px"
+			}, {
+				title : "comments",
+				field : "comments",
+				width : "125px"
+			}, {
+				title : "errorstring",
+				field : "errorstring",
+				width : "800px"
+			}, {
+				title : "percent_confident",
+				field : "percent_confident",
+				width : "125px"
+			}, {
+				title : "trouble_call_id",
+				field : "trouble_call_id",
+				width : "125px"
+			}, {
+				title : "object_id",
+				field : "object_id",
+				width : "125px"
+			}, {
+				title : "rpt_no",
+				field : "rpt_no",
+				width : "125px"
+			}, {
+				title : "outagedeviceid",
+				field : "outagedeviceid",
+				width : "125px"
+			}, {
+				title : "xfmr_id",
+				field : "xfmr_id",
+				width : "125px"
+			}, {
+				title : "phone",
+				field : "phone",
+				width : "125px"
+			}, {
+				title : "contact_callback_area",
+				field : "contact_callback_area",
+				width : "125px"
+			}, {
+				title : "close_call_time",
+				field : "close_call_time",
+				width : "250px"
+			}, {
+				title : "close_call_status",
+				field : "close_call_status",
+				width : "125px"
+			}, {
+				title : "outage_status",
+				field : "outage_status",
+				width : "125px"
+			}, {
+				title : "callback_flag",
+				field : "callback_flag",
+				width : "125px"
+			}, {
+				title : "callback_attempt_status",
+				field : "callback_attempt_status",
+				width : "125px"
+			}, {
+				title : "callback_attempt_time",
+				field : "callback_attempt_time",
+				width : "250px"
+			}, {
+				title : "problem_code",
+				field : "problem_code",
+				width : "125px"
+			}, {
+				title : "resolved_level",
+				field : "resolved_level",
+				width : "125px"
+			}, {
+				title : "company",
+				field : "company",
+				width : "125px"
+			}, {
+				title : "app_name",
+				field : "app_name",
+				width : "125px"
+			}, {
+				title : "call_type",
+				field : "call_type",
+				width : "125px"
+			}, {
+				title : "transaction_id",
+				field : "transaction_id",
+				width : "125px"
+			}, {
+				title : "source",
+				field : "source",
+				width : "125px"
+			}, ]
+		});
+	}
+</script>

@@ -1,0 +1,147 @@
+@()
+<div id="problemCodeGrid"></div>
+
+<style>
+.popover {
+	max-width: 400px;
+}
+
+#problemCodeInfoButton {
+	margin-top: 5px;
+}
+
+.popover-title {
+	color: black;
+}
+</style>
+<a href="#" class="k-button" data-toggle="popover" id="problemCodeInfoButton"><span class="k-icon k-i-note"></span></a>
+
+<script>
+	$(document).ready(function() {
+		$("#problemCodeInfoButton").popover({
+			placement: top,
+			title: "Problem Codes",
+			html:true,
+			content: "<p>Add, and modify siena_web_services.problem_code table records</p><p>Maps to" +
+			" astorm2.trouble_type table to create wire, xfmr, tree... codes.</p>"
+		});
+	});
+	function createProblemCodeGrid() {
+
+		var problemCodeBaseUrl = "trouble", problemCodeDataSource = new kendo.data.DataSource(
+				{
+					transport : {
+						read : {
+							url : problemCodeBaseUrl + "/getProblemCodes",
+							dataType : "json"
+						},
+						update : {
+							url : problemCodeBaseUrl + "/updateProblemCodes",
+							dataType : "jsonp",
+							type : "POST"
+						},
+						destroy : {
+							url : problemCodeBaseUrl + "/deleteProblemCodes",
+							dataType : "jsonp"
+						},
+						create : {
+							url : problemCodeBaseUrl + "/createProblemCodes",
+							type : "POST",
+							dataType : "jsonp"
+						},
+						parameterMap : function(options, operation) {
+							if (operation !== "read" && options.models) {
+								return {
+									models : kendo.stringify(options.models)
+								};
+							}
+						}
+					},
+					batch : true,
+					pageSize : 20,
+					schema : {
+						model : {
+							fields : {
+								problemCodeKey : {
+									editable : false,
+									nullable : false
+								},
+								problemCode : {
+									editable : true,
+									nullable : false
+								},
+								troubleTypeCode : {
+									editable : true,
+									nullable : false
+								},
+								source : {
+									editable : true,
+									nullable : false
+								},
+								eventType : {
+									editable : true,
+									nullable : false
+								}
+							}
+						}
+					}
+				});
+
+		function onGridEditing(arg) {
+			arg.container.find("input[name='troubleTypeCode']").attr(
+					'maxlength', '4');
+			arg.container.find("input[name='problemCode']").attr('maxlength',
+					'25');
+			arg.container.find("input[name='source']").attr('maxlength', '20');
+			arg.container.find("input[name='eventType']").attr('maxlength',
+					'20')
+		}
+
+		$("#problemCodeGrid").kendoGrid(
+				{
+					dataSource : problemCodeDataSource,
+					navigatable : true,
+					pageable : true,
+					toolbar : [ "create", "save", "cancel" ],
+					edit : onGridEditing,
+					columns : [ {
+						field : "problemCodeKey",
+						hidden : true
+					}, {
+						field : "problemCode",
+						title : "Problem Code",
+						width : 120
+					}, {
+						field : "troubleTypeCode",
+						title : "Trouble Type Code",
+						width : 120
+					}, {
+						field : "source",
+						title : "Source",
+						width : 120
+					}, {
+						field : "eventType",
+						title : "Event Type",
+						width : 120
+					} ],
+					editable : true,
+					selectable : "row",
+					change : function(e) {
+						var selectedRows = this.select();
+						var selectedDataItems = [];
+						for (var i = 0; i < selectedRows.length; i++) {
+							$("#sourceSelect").val(
+									$(selectedRows[0]).find(
+											"td[role='gridcell']:nth-child(4)")
+											.text());
+							$("#eventSelect").val(
+									$(selectedRows[0]).find(
+											"td[role='gridcell']:nth-child(5)")
+											.text());
+							var dataItem = this.dataItem(selectedRows[i]);
+							selectedDataItems.push(dataItem);
+						}
+					}
+				});
+	}
+</script>
