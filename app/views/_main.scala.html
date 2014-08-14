@@ -13,6 +13,7 @@
     	<link href="@routes.Assets.at("bootstrap-3.1.1-dist/css/bootstrap.min.css")" rel="stylesheet">
     	<script src="@routes.Assets.at("javascripts/jquery-1.11.1.min.js")"></script>
     	<script src="@routes.Assets.at("bootstrap-3.1.1-dist/js/bootstrap.min.js")"></script>
+    	<script src="@routes.Assets.at("javascripts/jquery.cookie.js")"></script>
     	
     	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,7 +29,7 @@
 
 
 		<script src="@routes.Assets.at("kendo/js/kendo.web.min.js")"></script>	
- 		<link href="@routes.Assets.at("kendo/styles/kendo.black.min.css")" rel="stylesheet" />
+ 		<link href="@routes.Assets.at("kendo/styles/kendo.blueopal.min.css")" rel="stylesheet" />
 		
 		
 <!-- ================================== -->
@@ -40,6 +41,105 @@
   				padding: 40px 15px;
   				text-align: center;
 			}
+			.hilite {
+				color: orange;
+			}
 		</style>
   </head>
 </html>
+<script>
+	$(document)
+			.ready(
+					function() {
+						var cookieValue = $.cookie("kendo-theme");
+						if (cookieValue === undefined)
+							cookieValue = 'black';
+						changeTheme(cookieValue);
+						// theme chooser drop-down
+						$(".themeChooser").kendoDropDownList(
+								{
+									dataTextField : "text",
+									dataValueField : "value",
+									dataSource : [ {
+										text : "Black",
+										value : "black"
+									}, {
+										text : "Blue Opal",
+										value : "blueopal"
+									}, {
+										text : "Default",
+										value : "default"
+									}, {
+										text : "Metro",
+										value : "metro"
+									}, {
+										text : "Metro Black",
+										value : "metroblack"
+									}, {
+										text : "Silver",
+										value : "silver"
+									}, {
+										text : "Moonlight",
+										value : "moonlight"
+									} ],
+									value : cookieValue,
+									change : function(e) {
+										var theme = (this.value() || "default")
+												.toLowerCase();
+										changeTheme(theme);
+										$.cookie("kendo-theme", theme, {path: '/'});
+									}
+								});
+
+						// loads new stylesheet
+						function changeTheme(skinName, animate) {
+							var doc = document, kendoLinks = $(
+									"link[href*='kendo.']", doc
+											.getElementsByTagName("head")[0]), commonLink = kendoLinks
+									.filter("[href*='kendo.common']"), skinLink = kendoLinks
+									.filter(":not([href*='kendo.common'])"), href = location.href, skinRegex = /kendo\.\w+(\.min)?\.css/i, extension = skinLink
+									.attr("rel") === "stylesheet" ? ".css"
+									: ".less", url = commonLink.attr("href")
+									.replace(
+											skinRegex,
+											"kendo." + skinName + "$1"
+													+ extension), exampleElement = $("#example");
+
+							function preloadStylesheet(file, callback) {
+								var element = $(
+										"<link rel='stylesheet' media='print' href='"
+												+ file + "'").appendTo("head");
+
+								setTimeout(function() {
+									callback();
+									element.remove();
+								}, 100);
+							}
+
+							function replaceTheme() {
+								var oldSkinName = $(doc).data("kendoSkin"), newLink;
+
+								/* 								if ($.browser.msie) {
+								 newLink = doc.createStyleSheet(url);
+								 } else { */
+								newLink = skinLink.eq(0).clone().attr("href",
+										url);
+								/* 					} */
+
+								newLink.insertBefore(skinLink[0]);
+								skinLink.remove();
+
+								$(doc.documentElement).removeClass(
+										"k-" + oldSkinName).addClass(
+										"k-" + skinName);
+							}
+
+							if (animate) {
+								preloadStylesheet(url, replaceTheme);
+							} else {
+								replaceTheme();
+							}
+						}
+						;
+					});
+</script>

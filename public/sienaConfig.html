@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="k-content">
+<head>
+<!-- ================================== -->
+<!-- twitter bootstrap -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap 101 Template</title>
+
+<link href="@routes.Assets.at("
+	bootstrap-3.1.1-dist/css/bootstrap.min.css")" rel="stylesheet">
+<script src="@routes.Assets.at("javascripts/jquery-1.11.1.min.js")"></script>
+<script src="@routes.Assets.at("bootstrap-3.1.1-dist/js/bootstrap.min.js")"></script>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+<!-- ================================== -->
+<!-- Kendo ui -->
+<title>Kendo UI Web</title>
+<link href="@routes.Assets.at("
+	kendo/styles/kendo.common.min.css")" rel="stylesheet" />
+<!--        <link href="@routes.Assets.at("kendo/styles/kendo.default.min.css")" rel="stylesheet" /> -->
+
+
+<script src="@routes.Assets.at("kendo/js/kendo.web.min.js")"></script>
+<link href="@routes.Assets.at("
+	kendo/styles/kendo.black.min.css")" rel="stylesheet" />
+
+
+<!-- ================================== -->
+<style>
+body {
+	padding-top: 50px;
+}
+
+.starter-template {
+	padding: 40px 15px;
+	text-align: center;
+}
+</style>
+</head>
+<body>
+
+	<ul>
+		<li>siena_amr.oa_version = 30, 3j</li>
+		<li>siena.trouble.amr.unsolicited_event => restore, outage, both,
+			off</li>
+		<li>siena.trouble.amr.outage_response => regular pings : restore,
+			outage, both, off</li>
+		<li>siena.trouble.amr.manual_response => manual pings : restore,
+			outage, both, off</li>
+		<li>siena_amr.validate_dups => removed</li>
+		<li>siena_amr.validate_event_date => removed</li>
+		<li>siena_amr.disable.tag_level => when this tag number is on
+			map, processing of events is off</li>
+		<li>siena_amr.suspended_meters.load_from_cis => 0 = link down, 1
+			= link active, off = off : use remote meter for suspended lookup</li>
+		<li>siena_amr.outage_event.enable => removed</li>
+		<li>siena_amr.restore_event.enable => removed</li>
+		<li>siena_amr.reping_on_outage_count => number of outage pings
+			required to put symbol on map</li>
+		<li>siena_amr.reping_delay => number of minutes to wait before
+			doing reping on outage event</li>
+		<li>siena_amr.reping_window => when re-pinging on outage, only
+			events returned within n minutes of original count</li>
+		<li>siena_amr.event_duplicate.timeout => when validateDuplicates,
+			this is time window to search within</li>
+		<li>siena_amr.pmu.enable => use pmu to control trouble reports,
+			deprecated</li>
+		<li>siena_amr.resolve_on_restore => when true, will resolve
+			trouble reports when (restoratin), overwrites caller type (bad)</li>
+		<li>siena_amr.cis.meter.client => for suspended meters, site name
+			(JEMC), special code to download suspended meters</li>
+		<li>siena_amr.ping_action => action to take on trouble_rpt/outage
+			resolved: trouble_rpt, outage, partial, xfmr, none</li>
+		<li>siena_amr.resolve_timeout => restoration trouble reports will
+			be restored/closed after n minutes (6 mins)</li>
+		<li>siena_amr.outage_timeout => outage trouble reports will be
+			restored/closed after n minutes (30 mins)</li>
+		<li>siena_amr.restore_ping_field => field_no, when set to number,
+			will disable ping from outage form</li>
+		<li>siena_amr.HTTP.Server => remote server : http:10.3.22.7</li>
+		<li>siena_amr.HTTP.Path => remote server path : /oa_server/od_31</li>
+		<li>siena_amr.oa_response_url => sent to remote amr server so it
+			knows where to send reply, 3x</li>
+		<li>oa_od.client => client name, used by siena_web_services to
+			determine which validate functions to run</li>
+		<li>siena_web_services.loc_lookup => if == 'meter' account lookup
+			by meter_loc, else loc</li>
+		<li>siena_web_services.event_count_threshold_account => event
+			monitor, if receive more events than this percentage, fire alarm</li>
+		<li>error cause codes...</li>
+	</ul>
+</body>

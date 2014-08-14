@@ -1,0 +1,137 @@
+<style>
+#help {
+	display: none;
+}
+</style>
+<div id="help">
+	<div id="siena_amr_oa_version_help">Specifies the version of
+		messages sent by this interface to remote server. Currently supports
+		30j and 30x. If set to X, siena_amr.oa_response_url must be set with
+		the return address, as the remote server will ping that address before
+		sending back a response.</div>
+
+	<div id="siena_amr_oa_response_url_help">
+		this url is sent to remote server when the system pings if the
+		siena_amr.oa_version is set to 30x. It must contain the address of the
+		tomcat server and the 30x soap address so that the remote can ping us
+		before sending back
+		<div id="siena_trouble_amr_unsolicited_event_help">
+			Supports four values:
+			<ul>
+				<li>off - discard the message, mark it as discarded</li>
+				<li>restoration - process only restoration messages</li>
+				<li>outage - process only outage messages</li>
+				<li>both - process outage and restoration unsolicted messages</li>
+			</ul>
+			When the system recieves unsolicited events from the remote server
+			(events not asked for by manual ping, or restoration, and
+			consequently do not have a siena_amr.callback_results record, the
+			system will act on the message based on this setting and possibly
+			create a restoration or outage trouble report.
+		</div>
+	</div>
+	<div id="siena_trouble_amr_outage_response_help">
+		Supports four values:
+		<ul>
+			<li>off - discard the message, mark it as discarded</li>
+			<li>restoration - process only restoration messages</li>
+			<li>outage - process only outage messages</li>
+			<li>both - process outage and restoration unsolicted messages</li>
+		</ul>
+		When the system sends ping requests to the remote server (done after
+		an outage or trouble report is resolved to check if the transformer is
+		indeed back in service), the message will be processed based on the
+		value of this configuration variable, possibly creatingh a resolved or
+		outage trouble report.
+	</div>
+	<div id="siena_trouble_amr_manual_response_help">
+		Supports four values:
+		<ul>
+			<li>off - discard the message, mark it as discarded</li>
+			<li>restoration - process only restoration messages</li>
+			<li>outage - process only outage messages</li>
+			<li>both - process outage and restoration unsolicted messages</li>
+		</ul>
+		When a user clicks on an outage, transformer, or trouble report and
+		manually pings it, the return message will be processed based on the
+		value of this configuration variable, possibly creating a resolved or
+		outage trouble report.
+	</div>
+	<div id="siena_amr_disable_tag_level_help">Cadops supports the
+		placing of tags on the map. This number is the ID of a tag that, when
+		placed on the map, effectively turns off all processing of outage
+		events received by the system. The main purpose is to disable the
+		feature during storms.</div>
+	<div id="siena_amr_suspended_meters_load_from_cis_help">The value
+		of this configuration variable determines if the system should check
+		for suspended meters from a remote table that contains the list of
+		accounts that have been shut up. It prevents the system from showing
+		false positives (outages) for meters that should be disabled.</div>
+	<div id="siena_amr_reping_on_outage_count_help">The value in this
+		config variable determines how many times the system will re-ping when
+		it recieves an outage odevent, before agreeing that the meter is
+		indeed off-line, and creating an outage trouble report. It's purpose
+		is to double (triple...) check that an outage trouble report should be
+		created.</div>
+	<div id="siena_amr_reping_delay_help">
+		See <span class="hilite">siena_amr.reping_on_outage_count</span>. When
+		re-pinging to determine if a meter is indeed out of service, the
+		system will wait a set time before sending the request. This number
+		represents the delay in minutes.
+	</div>
+	<div id="siena_amr_reping_window_help">When the system re-pings
+		to determine if a meter is out of service, there may be significant
+		delays, sometimes of an hour or more. This variable provides for a
+		window of time. All the pings for this attempt (1, 2, 3... re-ping)
+		must all occur within the window of time specified by this variable.
+		ie: if the first ping occured at 2:15 and the variable is set to 20
+		mins, then if the re-ping comes back after 2:35, it is discarded.</div>
+	<div id="siena_amr_pmu_enable_help">This variable is deprecated.
+		The system used to control creation of trouble_reports using PMU. This
+		is no longer the case.</div>
+	<div id="siena_amr_resolve_on_restore_help">TODO</div>
+	<div id="siena_amr_cis_meter_client_help">>TODO</div>
+	<div id="siena_amr_ping_action_help">
+		Supports four values:
+		<ul>
+			<li>none/not set - System will not ping</li>
+			<li>partial - System will ping on trouble reports for partially
+				restored outages</li>
+			<li>trouble_rpt - System will ping trouble reports as they are
+				resolved</li>
+			<li>outage - System will ping all the trouble reports associated
+				with an outage when the outage is closed</li>
+		</ul>
+		This is controlled by a dbms_job that runs every minute. The system
+		will send ping requests based on the variable.
+	</div>
+	<div id="siena_amr_resolve_timeout_help">
+		When the system creates restoration trouble reports, it will
+		automatically close them (remove from map) after N minutes, based on
+		this variable. This is done via the siena_amr dbms_job that runs once
+		per minute. <span class="hilite">Default is 6 minutes</span>
+	</div>
+	<div id="siena_amr_outage_timeout_help">
+		When the system creates outage trouble reports, it will automaticallyf
+		close them (remove them from the map) after N minutes, based on this
+		variable. Note, it will not close trouble reports that are linked to
+		an outage. This is done via the siena_amr job that runs once per
+		minute. <span class="hilite">Default is 30 minutes</span>
+	</div>
+	<div id="siena_amr_restore_ping_field_help">This numeric matches
+		a form variable that allows for the pinging from the outage form. If
+		it is not set, the system disallows pinging from the outage form.</div>
+	<div id="siena_amr_HTTP_Server_help">Remote AMR server to which
+		pings (odevent request messages) are sent</div>
+	<div id="siena_amr_HTTP_Path_help">Remote amr path to which pings
+		(od event equest messages) are sent</div>
+	<div id="oa_od_client_help">this variable is site specific and
+		determines site specific filters to be run when odevent notifications
+		are received.</div>
+	<div id="siena_web_services_loc_lookup_help">TODO</div>
+	<div id="siena_web_services_event_count_threshold_account_help">TODO</div>
+	<div id="siena_amr_cause_code_ignore_help">If the outage cause code
+		(assuming outage exists) is one of these values, the system will NOT
+		ping on restore</div>
+</div>
+

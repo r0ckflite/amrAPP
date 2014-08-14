@@ -79,25 +79,6 @@ object Application extends Controller with Secured {
     Ok(html.test1())
   }
 
-  def submit = IsAuthenticated { username =>
-    implicit request =>
-      println("the form has been submitted!")
-      val config = AmrConfig.amrConfigForm1.bindFromRequest.fold(
-        formWithErrors => {
-          // binding failure, retrieved form with errors:
-          println("form get failed!, form is : " + formWithErrors.errors)
-          BadRequest(views.html.index(formWithErrors, AmrConfig.formElements))
-          // TODO : Have an error page or error areas within the form
-        }, formData => {
-          // save form data back to db!
-          JDBC.withConnection(username) { implicit connection =>
-            AmrConfig.saveForm(connection, formData, null)
-          }
-          Redirect(routes.Application.index())
-        })
-      Redirect(routes.Application.index())
-  }
-
   /**
    * Logout and clean the session.
    */
@@ -108,30 +89,8 @@ object Application extends Controller with Secured {
 
   def index = IsAuthenticated { username =>
     implicit request => {
-      println("username = " + username)
 
-      val configItems = JDBC.withConnection(username) { implicit connection =>
-        models.SienaConfig.getConfigItems(connection, List("siena_amr.oa_version",
-          "siena.trouble.amr.unsolicited_event",
-          "siena.trouble.amr.outage_response",
-          "siena.trouble.amr.manual_response",
-          "siena_amr.reping_on_outage_count",
-          "siena_amr.reping_window",
-          "siena_amr.reping_delay",
-          "siena_amr.validate_dups",
-          "siena_amr.validate_event_date",
-          "siena_amr.disable.tag_level",
-          "siena_amr.suspended_meters.load_from_cis",
-          "siena_amr.outage_event.enable",
-          "siena_amr.restore_event.enable"))
-      }
-      
-
-      
-      
-      println("***** DEBUG : retrieved " + configItems.size + " config items")
-
-      Ok(views.html.index(AmrConfig.loadForm(configItems), AmrConfig.formElements))
+      Ok(views.html.index())
     }
   }
 }

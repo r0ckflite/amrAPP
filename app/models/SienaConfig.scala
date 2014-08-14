@@ -19,10 +19,31 @@ object SienaConfig {
     new SienaConfig(item, defaultValue, value, description, multiplesAllowed)
   }
 
-  def mapConfigToJson(items : Seq[SienaConfig]) = {    
-    Map(items map { sc => sc.item.replace('.', '_') -> sc.getValueString }: _*)
+  def mapConfigToJson(items: Seq[SienaConfig]) = {
+    Map(items filter {
+      sc => sc.multiplesAllowed.isEmpty || sc.multiplesAllowed.get.intValue != 1
+    }
+      map { sc => sc.item.replace('.', '_') -> sc.getValueString }: _*)
   }
-  
+
+  def mapMultipleConfigToJson(items: Seq[SienaConfig]): Map[String, Seq[String]] = {
+    val map: scala.collection.mutable.Map[String, scala.collection.mutable.ListBuffer[String]] = scala.collection.mutable.Map[String, scala.collection.mutable.ListBuffer[String]]()
+    items filter { sc =>
+      sc.multiplesAllowed.isDefined && sc.multiplesAllowed.get.intValue == 1
+    } map { sc =>
+      if (map contains sc.item) {
+        val t = map(sc.item)
+        t += sc.getValueString
+      } else {
+        println("adding " + sc.getValueString)
+        val b = scala.collection.mutable.ListBuffer.empty[String]
+        b += sc.getValueString
+        map(sc.item) = b
+      }
+    }
+    map.toMap[String, Seq[String]]
+  }
+
   val config = {
     get[String]("item") ~
       get[Option[String]]("default_value") ~
@@ -43,7 +64,7 @@ object SienaConfig {
     c.filter(c => c.item.equals(name)).lift(0).map(_.getValueString()).getOrElse(defaultValue)
 
   def getValue(c: Seq[SienaConfig], name: String): String = getValue(c, name, "---")
-  
+
   def getConfigItems(implicit conn: Connection, items: Seq[String]): List[SienaConfig] = {
     val inClause = items.mkString("'", "','", "'") // gives us 'foo','bar','xyz'
     val query = s"select item, default_value, value, description, multiples_allowed from siena.siena_config where item in ($inClause)"
@@ -68,7 +89,6 @@ class SienaConfig(
   }
 
   def getValueString(): String = {
-    println("DEBUG : ***** item = " + item + ", value = " + value + ", defaultValue = " + defaultValue)
     if (value.isDefined) value.get else if (defaultValue.isDefined) defaultValue.get else ""
   }
 }

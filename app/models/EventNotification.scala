@@ -311,18 +311,14 @@ call_type, transaction_id, source from event_notifications"""
 
       queryString += " order by event_notification_id desc"
 
-      println("DEBUG : EventNotication create select query = " + queryString)
-
       query = SQL(queryString)
       val results = query.as(eventNotification *)
-      println("DEBUG: getAllEventNotificationss returned " + results.size + " items")
 
       return results
     } else {
       queryString += " order by event_notification_id desc"
       query = SQL(queryString)
       val results = query.as(eventNotification *)
-      println("DEBUG: getAllEventNotificationss returned " + results.size + " items")
       results
     }
   }

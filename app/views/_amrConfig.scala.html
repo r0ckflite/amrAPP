@@ -1,59 +1,206 @@
-@(form: Form[AmrConfig1])
-
+@_amrHelp()
 <div class="row">
 	<div class="col-md-4">
 		<h4>OA Version</h4>
-		<span><input id="oaVersionHolder" place="Select OA Version"
-			title="Version of Multispeak being used" /></span>
+		<span><input id="siena_amr_oa_version"
+			place="Select OA Version" title="Version of Multispeak being used" /></span>
 	</div>
+	<div class="col-md-8">
+		<h4>OA Response URL</h4>
+		<span><input id="siena_amr_oa_response_url" class="k-input"
+			style="width: 400px;" placeholder="---" /></span>
+	</div>
+</div>
+<hr>
+<div class="row">
 	<div class="col-md-4">
 		<h4>Unsolicited Events</h4>
-		<span><input id="unsolicitedEventsHolder" place="---" /></span>
+		<span><input id="siena_trouble_amr_unsolicited_event"
+			place="---" /></span>
 	</div>
 	<div class="col-md-4">
 		<h4>Outage Response</h4>
-		<span><input id="outageResponseHolder" place="---" /></span>
+		<span><input id="siena_trouble_amr_outage_response" place="---" /></span>
 	</div>
-</div>
-<div class="row">
 	<div class="col-md-4">
 		<h4>Manual Response</h4>
-		<span><input id="manualResponseHolder" place="---" /></span>
+		<span><input id="siena_trouble_amr_manual_response" place="---" /></span>
 	</div>
+</div>
+<hr>
+<div class="row">
 	<div class="col-md-4">
 		<h4>Disable Tag Level</h4>
-		<span><input id="disableTagLevelHolder" place="---" /></span>
+		<span><input class="k-input" type="text"
+			id="od_event_disable_tag_level" place="---" /></span>
 	</div>
 	<div class="col-md-4">
 		<h4>Suspended Load CIS?</h4>
-		<span><input id="suspendedLoadCISHolder" place="---" /></span>
+		<span><input id="siena_amr_suspended_meters_load_from_cis"
+			place="---" /></span>
 	</div>
 </div>
+<hr>
 <div class="row">
-	<div class="col-md-4">
-		<h4>Outage Event Enable?</h4>
-		<span><input id="outageEventEnableHolder" place="---" /></span>
-	</div>
-	<div class="col-md-4">
-		<h4>Restore Event Enable?</h4>
-		<span><input id="restoreEventEnableHolder" place="---" /></span>
-	</div>
 	<div class="col-md-4">
 		<h4>Reping On Outage</h4>
-		<span><input id="repingOnOutageHolder" place="---" /></span>
+		<span><input id="siena_amr_reping_on_outage_count" place="---" /></span>
 	</div>
-</div>
-<div class="row">
 	<div class="col-md-4">
 		<h4>Reping Delay</h4>
-		<span><input id="repingDelayHolder" place="---" value="" /></span>
+		<span><input id="siena_amr_reping_delay" place="---" value="" /></span>
 	</div>
 	<div class="col-md-4">
 		<h4>Reping Window</h4>
-		<span><input id="repingWindowHolder" place="---" value="" /></span>
+		<span><input id="siena_amr_reping_window" place="---" value="" /></span>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-4 "k-input">
+		<h4>HTTP Server</h4>
+		<span><input type="text" id="siena_amr_HTTP_Server"
+			class="k-input" placeholder="---" /></span>
+	</div>
+	<div class="col-md-4 "k-input">
+		<h4>HTTP Path</h4>
+		<span><input type="text" id="siena_amr_HTTP_Path"
+			class="k-input" placeholder="---" /></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4 "k-input">
+		<h4>Wallet Auth</h4>
+		<span><input type="text" id="siena_amr_tools_wallet_auth"
+			class="k-input" placeholder="---" /></span>
+	</div>
+	<div class="col-md-4 "k-input">
+		<h4>Wallet</h4>
+		<span><input type="text" id="siena_amr_tools_wallet"
+			class="k-input" placeholder="---" /></span>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Ping Action</h4>
+		<span><input id="siena_amr_ping_action" place="---" /></span>
 	</div>
 	<div class="col-md-4">
-		<button class="k-button" type="submit" id="submitButton">Submit</button>
+		<h4>Resolve Timeout</h4>
+		<span><input id="siena_amr_resolve_timeout" place="---" /></span>
+	</div>
+	<div class="col-md-4">
+		<h4>Outage Timeout</h4>
+		<span><input id="siena_amr_outage_timeout" place="---" /></span>
+	</div>
+</div>
+<hr>
+
+<div class="row">
+	<div class="col-md-4">
+		<h4>PMU Enable</h4>
+		<span><input id="siena_amr_pmu_enable" place="---" /></span>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Resolve on Restore</h4>
+		<span><input id="siena_amr_resolve_on_restore" place="---" /></span>
+	</div>
+
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Restore Ping Field</h4>
+		<span><input id="siena_amr_restore_ping_field" place="---" /></span>
+	</div>
+</div>
+<hr>
+<div class="row">
+	<div class="col-md-4">
+		<h4>Multispeak Message data</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.Version</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_Version" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.UserID</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_UserID" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.Pwd</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_Pwd" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.AppName</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_AppName" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.AppVersion</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_AppVersion" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.Company</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_Company" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.CSUnits</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_CSUnits" class="k-input"
+			placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.CoordinateSystem</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_CoordinateSystem"
+			class="k-input" placeholder="---" />
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<h4>siena_amr.MultispeakMsgHeader.Datum</h4>
+	</div>
+	<div class="col-md-4">
+		<input id="siena_amr_MultispeakMsgHeader_Datum" class="k-input"
+			placeholder="---" />
 	</div>
 </div>
 
@@ -70,12 +217,21 @@
 #submitButton {
 	margin-top: 35px;
 }
+
+#responseUrlPathHolder {
+	width: 400px;
+}
+
+#lastRow {
+	width: 500px;
+}
 </style>
 
 <!--  Scripts to build input devices -->
 <script>
-	function createDropDown(id, source, value, help) {
-		var combo = $('#' + id + "Holder");
+	function createDropDown(id, source, json) {
+		var combo = $('#' + id);
+		var key = id;
 		var helper = id + "Help"
 		combo
 				.parent()
@@ -85,7 +241,7 @@
 			placement : top,
 			title : id,
 			html : true,
-			content : "<p>" + help + "</p>"
+			content : loadHelp(id)
 		});
 
 		combo.kendoDropDownList({
@@ -95,20 +251,27 @@
 			filter : "contains",
 			suggest : true,
 			index : 3,
-			value : value,
+			value : json[key],
 			change : function(e) {
-				$("#" + id).val(this.value())
+				$.get("@routes.Amr.submitItem()", {
+					name : key,
+					value : this.value()
+				})
 			}
 		});
-
-		// place values here on change for form submittal
-		combo
-				.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
-
 	}
 
-	function createNumericTextField(id, min, max, format, val, help) {
-		var text = $("#" + id + "Holder")
+	function loadHelp(id) {
+		var item = $("#" + id + "_help")
+		if (item.length == 0)
+			return "No Help";
+		else
+			return item.html();
+	}
+
+	function createNumericTextField(id, min, max, format, json) {
+		var text = $("#" + id)
+		var key = id;
 		var helper = id + "Help"
 		text
 				.parent()
@@ -119,18 +282,50 @@
 			placement : top,
 			title : id,
 			html : true,
-			content : "<p>" + help + "</p>"
+			content : loadHelp(id)
 		});
 		text.kendoNumericTextBox({
 			min : min,
 			max : max,
 			step : 1,
-			value : val,
-			format : format
+			value : json[key],
+			placeholder : "---",
+			format : format,
+			change : function(e) {
+				console.log('saving numeric');
+				$.get("@routes.Amr.submitItem()", {
+					name : key,
+					value : this.value()
+				})
+			}
 		});
+	}
 
+	function createTextInput(id, json) {
+		var text = $("#" + id)
+		var helper = id + "Help"
+		var key = id;
 		text
-				.html('<input id="' + id + '" name="' + id + '" type="text" style="display:none">')
+				.parent()
+				.append(
+						'<a class="k-button note-button" id="' + id + 'Help"><span class="k-icon k-i-note"></span></a');
+
+		$("#" + helper).popover({
+			placement : top,
+			title : id,
+			html : true,
+			content : loadHelp(id)
+		});
+		if (json[key] !== undefined)
+			$(text).val(json[key]);
+
+		text.change(function() {
+			console.log('saving text: ' + this.value);
+			$.get("@routes.Amr.submitItem()", {
+				name : key,
+				value : this.value
+			});
+		});
 	}
 
 	function convertBoolean(value) {
@@ -182,69 +377,126 @@
 			text : "OA_OD41",
 			value : "4"
 		} ];
-
-		createDropDown(
-				"oaVersion",
-				version,
-				'@form("oaVersion").value',
-				'Determins the version of ODEventNotification used when the system executes pings on meters');
-		createDropDown(
-				"unsolicitedEvents",
-				rob,
-				'@form("unsolicitedEvents").value',
-				'Determines whether system will ignore unsolicted pings [Pings that were not requested] or process them: none, outage, restore');
-		createDropDown(
-				"outageResponse",
-				rob,
-				'@form("outageResponse").value',
-				'When system receives ping, it will process it for (both), or will only process outages (outage) or restoration (restore)');
-		createDropDown(
-				"manualResponse",
-				rob,
-				'@form("manualResponse").value',
-				'When a manual ping is done from the map, it will be ignored (none), or only certain types of responses (outage or restoration) will be processed');
-		createDropDown(
-				"suspendedLoadCIS",
-				tf,
-				convertBoolean('@form("suspendedLoadCIS").value'),
-				'Set to on to instruct system to check for suspended customers. Will not ping them.');
-		createDropDown(
-				"outageEventEnable",
-				tf,
-				convertBoolean('@form("outageEventEnable").value'),
-				'When set to false, amr outage events will not be processed. No AMI_OFF trouble reports will be created.');
-		createDropDown(
-				"restoreEventEnable",
-				tf,
-				convertBoolean('@form("restoreEventEnable").value'),
-				'When set to false, amr restore events will not be processed. No AMI_ON trouble reports will be created.');
-		createNumericTextField(
-				"disableTagLevel",
-				0,
-				21,
-				"##",
-				'@form("disableTagLevel").value',
-				'tagl level number. When tag is on the map, anywhere, amr is disabled. Used for storms.');
-		createNumericTextField(
-				"repingOnOutage",
-				0,
-				10,
-				"## times",
-				'@form("repingOnOutage").value',
-				'When this number is non-zero, the system will re-ping any outage events it recieves #n times, to verify outage result');
-		createNumericTextField(
-				"repingDelay",
-				0,
-				60,
-				"## mins",
-				'@form("repingDelay").value',
-				'When repingOnOutage is set (>0), this variable determines how long the system will pause before re-pinging');
-		createNumericTextField(
-				"repingWindow",
-				0,
-				60,
-				"## mins",
-				'@form("repingWindow").value',
-				'When the system re-pings and outage, the response from the remote system must be received in #n minutes or it is discarded.');
+		action = [ {
+			text : "---",
+			value : ""
+		}, {
+			text : "Outage",
+			value : "outage"
+		}, {
+			text : "Trouble",
+			value : "trouble_rpt"
+		}, {
+			text : "Partial",
+			value : "partial"
+		}, {
+			text : "Transformer",
+			value : "xfmr"
+		}, {
+			text : "Off",
+			value : "off"
+		} ];
 	});
+
+	$(document)
+			.ready(
+					function() {
+						$
+								.ajax({
+									type : 'GET',
+									url : '@routes.Amr.getNarrativeData()',
+									success : function(json) {
+										createDropDown("siena_amr_oa_version",
+												version, json);
+										createDropDown(
+												"siena_trouble_amr_unsolicited_event",
+												rob, json);
+										createDropDown(
+												"siena_trouble_amr_outage_response",
+												rob, json);
+										createDropDown(
+												"siena_trouble_amr_manual_response",
+												rob, json);
+										createNumericTextField(
+												"od_event_disable_tag_level",
+												0, 32, "###", json);
+										createDropDown(
+												"siena_amr_suspended_meters_load_from_cis",
+												rob, json);
+										createNumericTextField(
+												"siena_amr_reping_delay", 0,
+												100, "### mins", json);
+										createNumericTextField(
+												"siena_amr_reping_window", 0,
+												100, "### mins", json)
+										createNumericTextField(
+												"siena_amr_reping_on_outage_count",
+												0, 5, "### times", json);
+										createDropDown("siena_amr_pmu_enable",
+												tf, json);
+										createDropDown(
+												"siena_amr_resolve_on_restore",
+												tf, json);
+										createDropDown("siena_amr_ping_action",
+												action, json);
+										createNumericTextField(
+												"siena_amr_resolve_timeout", 0,
+												100, "### mins", json);
+										createNumericTextField(
+												"siena_amr_outage_timeout", 0,
+												100, "### mins", json);
+										createDropDown(
+												"siena_amr_restore_ping_field",
+												tf, json);
+										createTextInput(
+												"siena_amr_HTTP_Server", json);
+										createTextInput("siena_amr_HTTP_Path",
+												json);
+										createTextInput(
+												"siena_amr_oa_response_url",
+												json);
+
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_Version",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_UserID",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_Pwd",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_AppName",
+												json);
+
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_AppVersion",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_Company",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_CSUnits",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_CoordinateSystem",
+												json);
+										createTextInput(
+												"siena_amr_MultispeakMsgHeader_Datum",
+												json);
+										createTextInput(
+												"siena_amr_tools_wallet_auth",
+												json);
+										createTextInput(
+												"siena_amr_tools_wallet", json);
+
+										for ( var key in json) {
+
+											console.log(key + " -> "
+													+ json[key]);
+											$("#" + key).text(json[key])
+										}
+									}
+								});
+					});
 </script>

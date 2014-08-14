@@ -9,6 +9,10 @@ import java.sql.Connection
 
 object Procedures {
 
+  /*
+   * returns true if stored proc indicates od events are currently not being
+   * processed in database
+   */
   def isODEventDisabled(connection: Connection): Boolean = {
     try {
       val s = connection.prepareCall("begin ? := sys.diutil.bool_to_int(siena_web_services.od_tools.isODEventDisabled()); end;")
@@ -22,6 +26,9 @@ object Procedures {
     return true
   }
 
+  /*
+   * generic function to search for existence of a job based on a substring
+   */
   def isJobFound(connection: Connection, what: String): (Boolean, Integer, java.util.Date, String) = {
     val query = s"select (next_date-last_date)*(24*60) delay, next_date, broken from dba_jobs where lower(what) like '%$what%'"
     try {
@@ -36,6 +43,10 @@ object Procedures {
     return (false, 0, new java.util.Date(System.currentTimeMillis()), "y")
   }
 
+  /*
+   * returns 1 if problem_codes linked to trouble_type are causing
+   * trouble reports to be analyzed, ie; creating outages
+   */
   def isOutagesAnalyzed(connection: Connection): Integer = {
     val q = """select count(*) the_count
     		from trouble_type_code
@@ -100,58 +111,4 @@ object Procedures {
 
     return (0, 0)
   }
-
-  /*
-   * convenience : laods data into Form and returns the form
-   */
-  def loadForm(c: Seq[SienaConfig]) = {
-    def getValue(c: Seq[SienaConfig], name: String) =
-      c.filter(c => c.item.equals(name)).lift(0).map(_.getValueString()).getOrElse("---")
-
-    def getValueInt(c: Seq[SienaConfig], name: String): Option[Int] = {
-      c.filter(c => c.item.equals(name)).lift(0).map(_.getValue().map(v => v.toInt)).getOrElse(None)
-    }
-
-    val oaVersion = getValue(c, "siena_amr.oa_version")
-    val unsolicitedEvents = getValue(c, "siena.trouble.amr.unsolicited_event")
-    val outageResponse = getValue(c, "siena.trouble.amr.outage_response")
-    val manualResponse = getValue(c, "siena.trouble.amr.manual_response")
-    val repingOnOutage = getValue(c, "siena_amr.reping_on_outage_count")
-    val repingWindow = getValue(c, "siena_amr.reping_window")
-    val repingDelay = getValue(c, "siena_amr.reping_delay")
-    val validateDups = getValue(c, "siena_amr.validate_dups")
-    val validateEventDate = getValue(c, "siena_amr.validate_event_date")
-    val disableTagLevel = getValue(c, "siena_amr.disable.tag_level")
-    val suspendedLoadCIS = getValue(c, "siena_amr.suspended_meters.load_from_cis")
-    val outageEventEnable = getValue(c, "siena_amr.outage_event.enable")
-    val restoreEventEnable = getValue(c, "siena_amr.restore_event.enable")
-    AmrConfig.amrConfigForm1.fill(AmrConfig1(oaVersion, null, unsolicitedEvents, outageResponse, manualResponse, validateDups, validateEventDate, disableTagLevel, suspendedLoadCIS, outageEventEnable, restoreEventEnable, repingOnOutage, repingDelay, repingWindow))
-  }
-
-  /*
-   * Saves each piece of form data
-   * 
-   * TODO: Create an DAO
-   */
-  def saveForm(connection: java.sql.Connection, formData: AmrConfig1) = {
-    def update(item: String, value: String) = {
-      val s = connection.prepareStatement("{call updateConfig(?, ?)}")
-      s.setString(1, item)
-      s.setString(2, value)
-      s.execute()
-    }
-
-    update("siena_amr.oa_version", formData.oaVersion)
-    update("siena.trouble.amr.unsolicited_event", formData.unsolicitedEvents)
-    update("siena.troube.amr.outage_response", formData.outageResponse)
-    update("siena.trouble.amr.manual_response", formData.manualResponse)
-    update("siena_amr.reping_on_outage_count", formData.repingOnOutage)
-    update("siena_amr.reping_delay", formData.repingDelay)
-    update("siena_amr.validate_dups", formData.validateDups)
-    update("siena_amr.validate_event_date", formData.validateEventDate)
-    update("siena_amr.suspended_meters.load_from_cis", formData.suspendedLoadCIS)
-    update("siena_amr.outage_event.enable", formData.outageEventEnable)
-    update("siena_amr.restore_event.enable", formData.restoreEventEnable)
-  }
-
 }

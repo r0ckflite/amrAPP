@@ -9,9 +9,7 @@ GET     /                           controllers.Application.index
 GET     /login                              controllers.Application.login
 POST    /login                              controllers.Application.authenticate
 GET     /logout                             controllers.Application.logout
-POST	/submit								controllers.Application.submit
 GET		/trouble							controllers.Trouble.trouble
-POST	/trouble/submit						controllers.Trouble.submit
 GET		/trouble/getCallerType				controllers.Trouble.getCallerType
 GET		/trouble/getProblemCodes			controllers.Trouble.getProblemCodes
 POST	/trouble/updateProblemCodes			controllers.Trouble.updateProblemCodes
@@ -21,9 +19,9 @@ GET		/trouble/test						controllers.Application.test
 GET		/trouble/getTroubleTypes			controllers.Trouble.getAllActiveTroubleTypes
 GET		/getPage1Vars						controllers.Application.getPage1Vars
 GET		/amr								controllers.Amr.amr
-POST	/amr/submit							controllers.Amr.submit
 GET		/amr/narrative						controllers.Amr.narrative
 GET		/amr/getNarrativeData				controllers.Amr.getNarrativeData
+GET		/amr/submitItem						controllers.Amr.submitItem
 
 
 GET		/assets/*file						controllers.Assets.at(path="/public",file)

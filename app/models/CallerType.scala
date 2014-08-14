@@ -10,6 +10,15 @@ import global._
 import java.sql.Connection
 import java.math.BigInteger
 
+class CallerType(
+  var caller_type_key: BigDecimal,
+  var caller_type: Option[String]) {
+
+  override def toString(): String = {
+    "caller_type_key: " + caller_type_key + ", caller_type: " + caller_type
+  }
+}
+
 object CallerType {
 
   def apply(caller_type_key: BigDecimal): CallerType = {
@@ -44,24 +53,11 @@ object CallerType {
     // todo : configurable for later schemas
     val firstRow = SQL(s"select count(*) as count from astorm2.caller_type where caller_type = \'$value\'").apply().head
     val count = firstRow[BigDecimal]("count").intValue()
-    println(s"*** DEBUG : checking caller type $value exists. " + (if( count > 0 ) "Exists" else "Does not exist"))
     if( count < 1 ) {
-
       val query = s"insert into astorm2.caller_type (caller_type_key, caller_type) values ((select max(caller_type_key)+1 from astorm2.caller_type), \'$value\')"
-      println(s"*** DEBUG : Inserting caller type $value, $query")
       SQL(query).execute    
     }
   }
 
 }
-
-class CallerType(
-  var caller_type_key: BigDecimal,
-  var caller_type: Option[String]) {
-
-  override def toString(): String = {
-    "caller_type_key: " + caller_type_key + ", caller_type: " + caller_type
-  }
-}
-    
 

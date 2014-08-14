@@ -26,7 +26,7 @@ case class ProblemCode(
 
 object ProblemCode {
 
-  val problemCode = {
+  private val problemCode = {
     get[Option[String]]("problem_code_key") ~
       get[String]("problem_code") ~
       get[String]("trouble_type_code") ~
@@ -36,22 +36,22 @@ object ProblemCode {
       }
   }
 
-  def getProblemCodeCount(implicit conn: Connection): Int = {
-    val firstRow = SQL("select count(*) as count from siena_web_services.problem_code").apply().head
-    val count = firstRow[BigDecimal]("count").intValue()
-    count
-  }
+//  def getProblemCodeCount(implicit conn: Connection): Int = {
+//    val firstRow = SQL("select count(*) as count from siena_web_services.problem_code").apply().head
+//    val count = firstRow[BigDecimal]("count").intValue()
+//    count
+//  }
+//
+//  def count(login: String, code: ProblemCode): Long = {
+//    JDBC.withConnection(login) { implicit connection =>
+//      val query = "select count(*) as c from siena_web_services.problem_code where problem_code||trouble_type_code||source||event_type = '" + code.problem_code_key.getOrElse("NONE") + "'"
+//      val firstRow = SQL(query).apply().head
+//      return firstRow[Long]("c")
+//    }
+//    0
+//  }
 
-  def count(login: String, code: ProblemCode): Long = {
-    JDBC.withConnection(login) { implicit connection =>
-      val query = "select count(*) as c from siena_web_services.problem_code where problem_code||trouble_type_code||source||event_type = '" + code.problem_code_key.getOrElse("NONE") + "'"
-      val firstRow = SQL(query).apply().head
-      return firstRow[Long]("c")
-    }
-    0
-  }
-
-  def count(implicit conn: Connection, code: ProblemCode): Long = {
+  private def count(implicit conn: Connection, code: ProblemCode): Long = {
     val query = "select count(*) as c from siena_web_services.problem_code where problem_code||trouble_type_code||source||event_type = '" + code.problem_code_key.getOrElse("NONE") + "'"
     println("DEBUG : saveRow.count : " + query)
 
@@ -61,11 +61,9 @@ object ProblemCode {
       val rs = stmt.executeQuery()
       rs.next
       val c = rs.getLong("c")
-      println("DEBUG : ProblemCode count returning " + c)
       return c
     } catch {
       case e: SQLException => {
-        println("DEBUG : ProblemCode count exception : " + e)
         0
       }
     } finally {
@@ -73,6 +71,9 @@ object ProblemCode {
     }
   }
 
+  /*
+   * returns list of all problem codes
+   */
   def getAllProblemCodes(implicit conn: Connection): List[ProblemCode] = {
     val query = "select problem_code||trouble_type_code||source||event_type as problem_code_key, problem_code, trouble_type_code, source, event_type from siena_web_services.problem_code"
     val stmt = conn.prepareStatement(query)
@@ -80,13 +81,10 @@ object ProblemCode {
     rs.next()
 
     val results = SQL(query).as(problemCode *)
-    println("DEBUG : number of rows in problem_code = " + getProblemCodeCount(conn))
-    println("DEBUG: getAllProblemCodes returned " + results.size + " items")
     results
   }
 
-  def saveRow(implicit conn: Connection, code: ProblemCode) {
-
+  private def saveRow(implicit conn: Connection, code: ProblemCode) {
     if (code.problem_code_key.isDefined && !code.problem_code_key.equals("")) {
       if (count(conn, code) > 0) {
         val q = s"update problem_code set problem_code = '${code.problem_code}', source = '${code.source}', trouble_type_code = '${code.trouble_type_code}', event_type = '${code.event_type}' where problem_code||trouble_type_code||source||event_type = '${code.problem_code_key.get}'"
@@ -100,6 +98,9 @@ object ProblemCode {
     SQL(q).execute
   }
 
+  /*
+   * Save changes to problem code, update or insert
+   */
   def save(implicit conn: Connection, codes: Seq[ProblemCode]) = {
     codes.foreach({ pc =>
       saveRow(conn, pc)
